@@ -32,20 +32,8 @@
     <t-search model:value="{{value}}" placeholder="" />
   </view>
   <view class="userinfo">
-    <!-- <block wx:if="{{canIUseOpenData}}">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <open-data class="animate__animated animate__bounceIn" type="userNickName"></open-data>
-      <t-button class="animate__animated animate__heartBeat infinite" theme="primary">按钮</t-button>
-      <text class="iconfont icon-danci" />
-    </block> -->
-    <!-- <block wx:if="{{!openid}}">
-      
-      <t-dialog visible="{{showConfirm}}" content="立即登录背单词" confirm-btn="{{ confirmBtn }}" bind:confirm="getUserProfile" />
-    </block> -->
     <block wx:if="{{bookId==0}}">
-      <image src="/assets/unlogin.png" style="width: 100%;margin-top: 10%;" />
+      <image src="/assets/unlogin.png" style="width: 75%;margin-top: 10%;" />
       <view>请先选择一本词书</view>
     </block>
     <view wx:if="{{bookId!=0}}" class="card">

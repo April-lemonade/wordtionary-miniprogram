@@ -26,6 +26,7 @@ App({
               that.globalData.openid = res.data.id,
               that.globalData.wordId = res.data.wordId,
               that.globalData.bookId = res.data.bookId
+              that.globalData.userInfo = res.data
             }
           })
         } else {

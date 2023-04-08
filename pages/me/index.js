@@ -122,6 +122,10 @@ Page({
     }
   },
   onLoad() {
+    this.setData({
+      name : app.globalData.userInfo.name,
+      avatarUrl : app.globalData.userInfo.avatarUrl
+    })
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true
@@ -130,6 +134,10 @@ Page({
   },
 
   onShow: function () {
+    this.setData({
+      name : app.globalData.userInfo.name,
+      avatarUrl : app.globalData.userInfo.avatarUrl
+    })
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
@@ -139,15 +147,29 @@ Page({
     }
   },
   getUserProfile(e) {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
-    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({
       desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
         this.setData({
-          avatarUrl:res.userInfo.avatarUrl,
-          name:res.userInfo.nickName,
+          avatarUrl: res.userInfo.avatarUrl,
+          name: res.userInfo.nickName,
           hasUserInfo: true
+        })
+        app.globalData.userInfo = res
+        wx.request({
+          url: 'http://localhost:2346/user/saveinfo',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          method: "POST",
+          data: {
+            avatarUrl: res.userInfo.avatarUrl,
+            name: res.userInfo.nickName,
+            openid:app.globalData.openid
+          },
+          success: (res) => {
+            console.log(res)
+          }
         })
       }
     })
