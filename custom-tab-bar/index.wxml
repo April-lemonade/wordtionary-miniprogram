@@ -1,0 +1,35 @@
+<!-- miniprogram/custom-tab-bar/index.wxml
+<cover-view class="tab-bar">
+  <cover-view class="tab-bar-border"></cover-view>
+  <cover-view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+    <cover-view style="flex-direction: row;display: flex;width: 100%;justify-content: center;">
+      <cover-image class="{{animate}}" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></cover-image>
+      <cover-view style="color: {{selected === index ? selectedColor : color}};height: 27px;line-height: 27px;margin-left: 2%;">{{item.text}}</cover-view>
+    </cover-view>
+  </cover-view>
+</cover-view> -->
+<t-tab-bar value="{{value}}" bindchange="onChange" shape="round" theme="tag" split="{{false}}">
+  <t-tab-bar-item
+    wx:if="{{index==0}}"
+    badge-props="{{ {count: 16} }}"
+    wx:for="{{list}}"
+    wx:key="index"
+    value="{{item.value}}"
+    icon="{{item.icon}}"
+    ariaLabel="{{item.ariaLabel}}"
+    data-path="{{item.pagePath}}"
+  >
+    {{item.label}}
+  </t-tab-bar-item>
+  <t-tab-bar-item
+    wx:if="{{index!=0}}"
+    wx:for="{{list}}"
+    wx:key="index"
+    value="{{item.value}}"
+    icon="{{item.icon}}"
+    ariaLabel="{{item.ariaLabel}}"
+    data-path="{{item.pagePath}}"
+  >
+    {{item.label}}
+  </t-tab-bar-item>
+</t-tab-bar>

@@ -1,0 +1,15 @@
+{
+  "usingComponents": {
+    "t-progress": "/miniprogram_npm/tdesign-miniprogram/progress/progress",
+    "t-stepper": "/miniprogram_npm/tdesign-miniprogram/stepper/stepper",
+    "t-divider": "/miniprogram_npm/tdesign-miniprogram/divider/divider",
+    "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
+    "t-collapse": "/miniprogram_npm/tdesign-miniprogram/collapse/collapse",
+    "t-collapse-panel": "/miniprogram_npm/tdesign-miniprogram/collapse-panel/collapse-panel",
+    "t-radio-group": "/miniprogram_npm/tdesign-miniprogram/radio-group/radio-group",
+    "t-radio": "/miniprogram_npm/tdesign-miniprogram/radio/radio",
+    "t-fab": "/miniprogram_npm/tdesign-miniprogram/fab/fab",
+    "t-dialog": "/miniprogram_npm/tdesign-miniprogram/dialog/dialog"
+  },
+  "navigationBarTitleText": "单词表"
+}

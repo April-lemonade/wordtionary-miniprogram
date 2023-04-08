@@ -1,0 +1,51 @@
+/* .log-list {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+}
+.log-item {
+  margin: 10rpx;
+} */
+.avatar-example {
+  top: 60px;
+  left:20px
+}
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-bottom: 100px;
+  background: rgba(0, 0, 0, 0.5) url('https://images.unsplash.com/photo-1477882244523-716124bf91a1?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&s=223f3ec05141e71c38c6018970c6c6d9');
+  background-blend-mode: darken;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: auto 270px;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  height: 200px;
+}
+.chartContainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-left: 5%;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  /* justify-items: center; */
+} 
+ec-canvas {
+  width: 100%;
+  height: 100%;
+}
