@@ -6,6 +6,7 @@
     "t-tab-panel": "/miniprogram_npm/tdesign-miniprogram/tab-panel/tab-panel",
     "ec-canvas": "/ec-canvas/ec-canvas",
     "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell",
-    "t-date-time-picker": "/miniprogram_npm/tdesign-miniprogram/date-time-picker/date-time-picker"
+    "t-date-time-picker": "/miniprogram_npm/tdesign-miniprogram/date-time-picker/date-time-picker",
+    "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button"
   }
 }

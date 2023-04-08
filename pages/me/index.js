@@ -111,27 +111,24 @@ function initChart(canvas, width, height, dpr) {
 const app = getApp()
 Page({
   data: {
-    // logs: []
-    image: 'https://tdesign.gtimg.com/miniprogram/images/avatar1.png',
+    userInfo: {},
+    hasUserInfo: false,
+    canIUseGetUserProfile: false,
     tabPanelstyle: '',
-    avatarUrl: '',
+    avatarUrl: 'https://tdesign.gtimg.com/miniprogram/images/avatar1.png',
     name: '',
     ec: {
       onInit: initChart
     }
   },
   onLoad() {
-    this.setData({
-      // logs: (wx.getStorageSync('logs') || []).map(log => {
-      //   return {
-      //     date: util.formatTime(new Date(log)),
-      //     timeStamp: log
-      //   }
-      // })
-      avatarUrl: app.globalData.userInfo.avatarUrl,
-      name: app.globalData.userInfo.nickName
-    })
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true
+      })
+    }
   },
+
   onShow: function () {
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
@@ -140,5 +137,19 @@ Page({
         value: '/pages/me/index'
       })
     }
-  }
+  },
+  getUserProfile(e) {
+    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
+    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        this.setData({
+          avatarUrl:res.userInfo.avatarUrl,
+          name:res.userInfo.nickName,
+          hasUserInfo: true
+        })
+      }
+    })
+  },
 })

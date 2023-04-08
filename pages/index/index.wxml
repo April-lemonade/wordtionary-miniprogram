@@ -40,32 +40,30 @@
       <t-button class="animate__animated animate__heartBeat infinite" theme="primary">按钮</t-button>
       <text class="iconfont icon-danci" />
     </block> -->
-    <block wx:if="{{!hasUserInfo}}">
-      <!-- <button > 获取头像昵称 </button> -->
-      <t-dialog visible="{{showConfirm}}" content="立即登录背单词" confirm-btn="{{ confirmBtn }}" bind:confirm="getUserProfile" />
-      <image src="/assets/unlogin.png" style="width: 100%;margin-top: 10%;" />
-    </block>
-    <block wx:if="{{bookId==0}}">
+    <!-- <block wx:if="{{!openid}}">
       
-        <image src="/assets/unlogin.png" style="width: 100%;margin-top: 10%;" />
-        <view>请先选择一本词书</view>
-      </block>
-      <view wx:if="{{bookId!=0}}" class="card">
-        <view class="word">
-          <p>{{word.word}}</p>
+      <t-dialog visible="{{showConfirm}}" content="立即登录背单词" confirm-btn="{{ confirmBtn }}" bind:confirm="getUserProfile" />
+    </block> -->
+    <block wx:if="{{bookId==0}}">
+      <image src="/assets/unlogin.png" style="width: 100%;margin-top: 10%;" />
+      <view>请先选择一本词书</view>
+    </block>
+    <view wx:if="{{bookId!=0}}" class="card">
+      <view class="word">
+        <p>{{word.word}}</p>
+      </view>
+      <view class="soundmark">
+        <view class="bri_soundmark">
+          <text>英：</text>
+          <text style="color: #0052d9;">{{word.bri}}</text>
         </view>
-        <view class="soundmark">
-          <view class="bri_soundmark">
-            <text>英：</text>
-            <text style="color: #0052d9;">{{word.bri}}</text>
-          </view>
-          <view class="uni_soundmark">
-            <text>美：</text>
-            <text style="color: #0052d9;">{{word.uni}}</text>
-          </view>
+        <view class="uni_soundmark">
+          <text>美：</text>
+          <text style="color: #0052d9;">{{word.uni}}</text>
         </view>
       </view>
- 
+    </view>
+
   </view>
 
 
