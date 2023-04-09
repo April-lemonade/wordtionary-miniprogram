@@ -27,6 +27,9 @@ App({
               that.globalData.wordId = res.data.wordId,
               that.globalData.bookId = res.data.bookId
               that.globalData.userInfo = res.data
+              if (that.userInfoReadyCallback) {
+                that.userInfoReadyCallback(res)
+              }
             }
           })
         } else {
@@ -39,6 +42,7 @@ App({
     userInfo: null,
     bookId:0,
     wordId:0,
-    openid:''
+    openid:'',
+    wordList: []
   }
 })

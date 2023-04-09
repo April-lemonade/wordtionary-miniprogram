@@ -1,8 +1,9 @@
 {
   "usingComponents": {
-    "t-button": "tdesign-miniprogram/button/button",
-    "t-dialog": "tdesign-miniprogram/dialog/dialog",
-    "t-search": "/miniprogram_npm/tdesign-miniprogram/search/search"
+    "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
+    "t-dialog": "/miniprogram_npm/tdesign-miniprogram/dialog/dialog",
+    "t-search": "/miniprogram_npm/tdesign-miniprogram/search/search",
+    "t-empty": "/miniprogram_npm/tdesign-miniprogram/empty/empty"
   },
   "navigationBarTitleText": "背单词"
 }

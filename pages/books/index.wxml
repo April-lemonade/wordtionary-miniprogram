@@ -44,14 +44,14 @@
       </t-collapse-panel>
       <t-collapse-panel header="系统单词表" value="{{1}}">
         <t-radio-group value="{{value1}}" bind:change="onChange1">
-          <view wx:for="{{3}}" wx:key="index" class="card {{value1 == index ? 'card--active' : ''}}">
+          <view wx:for="{{systembook}}" wx:key="index" wx:for-item="item" class="card {{value1 == index ? 'card--active' : ''}}">
             <!-- <t-icon wx:if="{{value1 == index}}" name="check" t-class="card__icon" /> -->
-            <t-radio value="{{index}}" label="单选" icon="none" borderless />
+            <t-radio value="{{index}}" label="{{item.name}}" icon="none" borderless disabled="{{selectedBookId==item.id}}" />
           </view>
         </t-radio-group>
       </t-collapse-panel>
     </t-collapse>
   </view>
   <t-fab icon="check" wx:if="{{value!=-1||value1!=-1}}" data-key="showConfirm" style="bottom: 60px;right: 5%;" bind:click="handleClick" text="更换单词表" />
-  <t-dialog visible="{{showConfirm}}" content="确定要更换词表为 考研红宝书 吗？" confirm-btn="{{ confirmBtn }}" cancel-btn="取消" bind:confirm="closeDialog" bind:cancel="closeDialog"  />
+  <t-dialog visible="{{showConfirm}}" content="确定要更换词表吗？" confirm-btn="{{ confirmBtn }}" cancel-btn="取消" bind:confirm="changeBook" bind:cancel="closeDialog" />
 </view>

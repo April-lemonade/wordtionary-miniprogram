@@ -1,4 +1,6 @@
 // pages/books/index.js
+const app = getApp()
+
 Page({
 
   /**
@@ -13,17 +15,32 @@ Page({
     value1: -1,
     dialogKey: '',
     showConfirm: false,
+    bookId: 0,
     confirmBtn: {
       content: '确定',
       variant: 'base'
     },
+    systembook: [],
+    selectedBookId: -1
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+    let that = this
+    this.setData({
+      selectedBookId: app.globalData.bookId
+    })
+    wx.request({
+      url: 'http://localhost:2346/wordlist/getall',
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          systembook: res.data
+        })
+      }
+    })
   },
 
   /**
@@ -37,7 +54,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.setData({
+      selectedBookId: app.globalData.bookId
+    })
   },
 
   /**
@@ -81,7 +100,6 @@ Page({
   },
 
   countEdit() {
-    console.log(this.data.countChange)
     let that = this
     let data = !this.countChange
     this.setData({
@@ -104,9 +122,10 @@ Page({
     });
   },
   onChange1(e) {
+    console.log(this.data.selectedBookId)
     this.setData({
       value1: e.detail.value,
-      value: -1
+      value: -1,
     });
   },
   handleClick(e) {
@@ -127,5 +146,31 @@ Page({
     this.setData({
       [dialogKey]: false
     });
+  },
+
+  changeBook() {
+    let that = this
+    let finalvalue = -1
+    if (this.data.value != -1)
+      finalvalue = this.data.value + 1
+    else
+      finalvalue = this.data.value1 + 1
+    console.log("改变词书id为" + finalvalue)
+    wx.request({
+      url: 'http://localhost:2346/wordlist/change?bookId=' + finalvalue + '&openid=' + app.globalData.openid,
+      success: (res) => {
+        console.log(res)
+        wx.request({
+          url: 'http://localhost:2346/word/getwords?bookId=' + finalvalue + "&wordId=" + app.globalData.wordId,
+          success: (res) => {
+            console.log(res)
+            app.globalData.wordList = res.data
+            that.closeDialog()
+          }
+        })
+      }
+    })
   }
+
+
 })

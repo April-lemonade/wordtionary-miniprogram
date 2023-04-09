@@ -32,6 +32,9 @@
     <t-search model:value="{{value}}" placeholder="" />
   </view>
   <view class="userinfo">
+    <block wx:if="{{loading==1}}">
+      <image src="/assets/loading.png" style="width: 75%;margin-top: 10%;" />
+    </block>
     <block wx:if="{{bookId==0}}">
       <image src="/assets/unlogin.png" style="width: 75%;margin-top: 10%;" />
       <view>请先选择一本词书</view>
@@ -43,11 +46,13 @@
       <view class="soundmark">
         <view class="bri_soundmark">
           <text>英：</text>
-          <text style="color: #0052d9;">{{word.bri}}</text>
+          <text style="color: #0052d9;text-decoration:underline" bindtap="playbrisound">{{word.brisound}}</text>
+          <!-- <audio src="{{word.audioFile[0]}}"></audio> -->
+
         </view>
         <view class="uni_soundmark">
           <text>美：</text>
-          <text style="color: #0052d9;">{{word.uni}}</text>
+          <text style="color: #0052d9;text-decoration:underline" bindtap="playunisound">{{word.unisound}}</text>
         </view>
       </view>
     </view>
