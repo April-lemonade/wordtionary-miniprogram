@@ -34,30 +34,49 @@
   <view class="userinfo">
     <block wx:if="{{loading==1}}">
       <image src="/assets/loading.png" style="width: 75%;margin-top: 10%;" />
+      <t-loading theme="dots" size="80rpx" class="wrapper" text="单词正在运输途中，请稍后" layout="vertical" />
     </block>
-    <block wx:if="{{bookId==0}}">
+    <block wx:if="{{loading==0&&bookId==0}}">
       <image src="/assets/unlogin.png" style="width: 75%;margin-top: 10%;" />
       <view>请先选择一本词书</view>
     </block>
-    <view wx:if="{{bookId!=0}}" class="card">
+    <view wx:if="{{loading==0&&bookId!=0}}" class="card">
       <view class="word">
         <p>{{word.word}}</p>
       </view>
       <view class="soundmark">
         <view class="bri_soundmark">
           <text>英：</text>
-          <text style="color: #0052d9;text-decoration:underline" bindtap="playbrisound">{{word.brisound}}</text>
-          <!-- <audio src="{{word.audioFile[0]}}"></audio> -->
-
+          <text style="color: #0052d9;text-decoration:underline" bindtap="playbrisound">[{{translation.pronunciations[0].phoneticSpelling}}]</text>
         </view>
         <view class="uni_soundmark">
           <text>美：</text>
-          <text style="color: #0052d9;text-decoration:underline" bindtap="playunisound">{{word.unisound}}</text>
+          <text style="color: #0052d9;text-decoration:underline" bindtap="playunisound">[{{translation.pronunciations[1].phoneticSpelling}}]</text>
         </view>
       </view>
+      <view class="overview">
+        <view wx:for="{{translation.senses}}" wx:key="index" wx:for-item="item">
+          <t-swipe-cell>
+            <t-cell bordered="{{true}}" title="{{item.notes[0].text}} {{item.translations[0].text}}" t-class-title="{{'class'+familiar[index]}}"/>
+            <!-- <view slot="left" class="btn-wrapper">
+              <view class="btn kill-btn" bind:tap="onKill">KILL</view>
+            </view> -->
+            <view slot="right" class="btn-wrapper">
+              <view class="btn delete-btn" data-index="{{index}}" bind:tap="onStrange">陌生</view>
+              <view class="btn favor-btn" data-index="{{index}}" bind:tap="onBlur">模糊</view>
+              <view class="btn edit-btn" data-index="{{index}}" bind:tap="onFamiliar">熟悉</view>
+            </view>
+          </t-swipe-cell>
+          <view style="margin-left:5%;margin-bottom: 5%;" wx:for="{{item.examples}}" wx:for-index="childindex" wx:for-item="item1" >
+            <view >{{childindex+1}}. {{item1.text}}</view>
+            <view >{{item1.translations[0].text}}</view>
+          </view>
+        </view>
+      </view>
+      <view style="display: flex;flex-direction: row;width: 90%;">
+        <t-button style="margin-right: 5%;" theme="danger" size="small">KILL</t-button>
+        <t-button theme="primary" size="small" disabled="{{disabled}}">下一个</t-button>
+      </view>
     </view>
-
   </view>
-
-
 </view>

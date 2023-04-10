@@ -5,6 +5,14 @@ const app = getApp()
 Page({
   data: {
     animationType: "animated bounceInUp",
+    right: [{
+      text: '删除',
+      className: 'btn delete-btn',
+    }, ],
+    left: [{
+      text: '选择',
+      className: 'btn favor-btn',
+    }, ],
     showConfirm: true,
     confirmBtn: {
       content: '确定',
@@ -17,29 +25,40 @@ Page({
       bri: '/saʊnd/',
       uni: '/saʊnd/'
     },
+    translation: {},
     openid: '',
-    loading: 1
+    loading: 1,
+    memory: -2,
+    familiar: [],
+    disabled: true,
+    style:''
   },
   onLoad() {
-    // console.log(app.globalData.userInfo.bookId)
     let that = this
     if (!app.globalData.userInfo) {
-
       app.userInfoReadyCallback = res => {
         console.log(app.globalData.userInfo.bookId)
-        that.setData({
-          loading: 0,
-          bookId: app.globalData.userInfo.bookId
-        })
         if (app.globalData.userInfo.bookId != 0) {
           wx.request({
             url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.bookId,
             success: (res) => {
               console.log(res)
               app.globalData.wordList = res.data
+              var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+              var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+              for (let i = 0; i < array.length; i++) {
+                array1[i] = ''
+                array[i] = -2
+              }
               that.setData({
-                word: res.data[0]
+                word: res.data[0],
+                translation: JSON.parse(res.data[0].oxfordTranslations),
+                loading: 0,
+                bookId: app.globalData.userInfo.bookId,
+                familiar: array,
+                class: array1
               })
+              console.log(this.data.familiar)
             }
           })
         }
@@ -84,18 +103,18 @@ Page({
       }
     })
   },
-  playbrisound(){
+  playbrisound() {
     const innerAudioContext = wx.createInnerAudioContext({
       useWebAudioImplement: true // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
     })
-    innerAudioContext.src = this.data.word.audioFile[0]
+    innerAudioContext.src = this.data.translation.pronunciations[0].audioFile
     innerAudioContext.play() // 播放
   },
-  playunisound(){
+  playunisound() {
     const innerAudioContext = wx.createInnerAudioContext({
-      useWebAudioImplement: true // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
+      useWebAudioImplement: true
     })
-    innerAudioContext.src = this.data.word.audioFile[1]
+    innerAudioContext.src = this.data.translation.pronunciations[1].audioFile
     innerAudioContext.play() // 播放
   },
   onShow: function () {
@@ -106,7 +125,61 @@ Page({
         value: '/pages/index/index'
       })
     }
-    // console.log(app.globalData.userInfo.bookId)
+  },
+  onKill() {
+    wx.showToast({
+      title: '你点击了删除',
+      icon: 'none'
+    });
+  },
+  onStrange(e) {
+    var arry = this.data.familiar
+    arry[e.target.dataset.index] = -1
+    this.setData({
+      familiar:arry
+    })
+    if (!arry.includes(-2)) {
+      this.setData({
+        disabled: false
+      })
+    }
 
-  }
+    wx.showToast({
+      title: '你点击了删除',
+      icon: 'none'
+    });
+  },
+  onBlur(e) {
+    var arry = this.data.familiar
+    arry[e.target.dataset.index] = 1
+    this.setData({
+      familiar:arry
+    })
+    if (!arry.includes(-2)) {
+      this.setData({
+        disabled: false
+      })
+    }
+    wx.showToast({
+      title: '你点击了编辑',
+      icon: 'none'
+    });
+  },
+  onFamiliar(e) {
+    var arry = this.data.familiar
+    arry[e.target.dataset.index] = 2
+    this.setData({
+      familiar:arry
+    })
+    if (!arry.includes(-2)) {
+      this.setData({
+        disabled: false
+      })
+    }
+    console.log(this.data.familiar)
+    wx.showToast({
+      title: '你点击了收藏',
+      icon: 'none'
+    });
+  },
 })
