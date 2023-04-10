@@ -37,7 +37,7 @@ Page({
     let that = this
     if (!app.globalData.userInfo) {
       app.userInfoReadyCallback = res => {
-        console.log(app.globalData.userInfo.bookId)
+        // console.log(app.globalData.userInfo.bookId)
         if (app.globalData.userInfo.bookId != 0) {
           wx.request({
             url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.bookId,
@@ -58,7 +58,7 @@ Page({
                 familiar: array,
                 class: array1
               })
-              console.log(this.data.familiar)
+              // console.log(this.data.familiar)
             }
           })
         }
@@ -126,12 +126,12 @@ Page({
       })
     }
   },
-  onKill() {
-    wx.showToast({
-      title: '你点击了删除',
-      icon: 'none'
-    });
-  },
+  // onKill() {
+  //   wx.showToast({
+  //     title: '你点击了删除',
+  //     icon: 'none'
+  //   });
+  // },
   onStrange(e) {
     var arry = this.data.familiar
     arry[e.target.dataset.index] = -1
@@ -143,11 +143,6 @@ Page({
         disabled: false
       })
     }
-
-    wx.showToast({
-      title: '你点击了删除',
-      icon: 'none'
-    });
   },
   onBlur(e) {
     var arry = this.data.familiar
@@ -160,10 +155,6 @@ Page({
         disabled: false
       })
     }
-    wx.showToast({
-      title: '你点击了编辑',
-      icon: 'none'
-    });
   },
   onFamiliar(e) {
     var arry = this.data.familiar
@@ -176,10 +167,8 @@ Page({
         disabled: false
       })
     }
-    console.log(this.data.familiar)
-    wx.showToast({
-      title: '你点击了收藏',
-      icon: 'none'
-    });
   },
+  next(){
+    
+  }
 })

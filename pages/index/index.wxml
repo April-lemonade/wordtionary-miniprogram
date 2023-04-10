@@ -75,7 +75,7 @@
       </view>
       <view style="display: flex;flex-direction: row;width: 90%;">
         <t-button style="margin-right: 5%;" theme="danger" size="small">KILL</t-button>
-        <t-button theme="primary" size="small" disabled="{{disabled}}">下一个</t-button>
+        <t-button theme="primary" size="small" disabled="{{disabled}}" bindtap="next">下一个</t-button>
       </view>
     </view>
   </view>

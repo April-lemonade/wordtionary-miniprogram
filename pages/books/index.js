@@ -21,6 +21,8 @@ Page({
       variant: 'base'
     },
     systembook: [],
+    userbook: [],
+    bookName: '',
     selectedBookId: -1
   },
 
@@ -29,15 +31,45 @@ Page({
    */
   onLoad(options) {
     let that = this
-    this.setData({
-      selectedBookId: app.globalData.bookId
-    })
+    if (app.globalData.userInfo.bookId != 0) {
+      that.setData({
+        selectedBookId: app.globalData.userInfo.bookId
+      })
+      wx.request({
+        url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
+        success: (res) => {
+          console.log(res)
+          that.setData({
+            bookName: res.data
+          })
+        }
+      })
+    }
+    if (!app.globalData.userInfo) {
+      app.userInfoReadyCallback = res => {
+        console.log(app.globalData.userInfo.bookId + "huu")
+        if (app.globalData.userInfo.bookId != 0) {
+          that.setData({
+            selectedBookId: app.globalData.userInfo.bookId
+          })
+        }
+      }
+    }
     wx.request({
-      url: 'http://localhost:2346/wordlist/getall',
+      url: 'http://localhost:2346/wordlist/getadmin',
       success: (res) => {
         console.log(res)
         that.setData({
           systembook: res.data
+        })
+      }
+    })
+    wx.request({
+      url: 'http://localhost:2346/wordlist/getuser?openid='+app.globalData.userInfo.openid,
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          userbook: res.data
         })
       }
     })

@@ -2,14 +2,10 @@
 <view class="container">
   <view class="nowlist">
     <view style="margin-bottom: 3%;display: flex;flex-direction: row;font-weight: bold;">
-      <view>
-        当前单词表：
-      </view>
-      <view class="boldfont">
-        考研红宝书
-      </view>
+      <view>当前单词表：</view>
+      <view class="boldfont">{{bookName}}</view>
     </view>
-    <view class="dailytask">
+    <!-- <view class="dailytask">
       <view style="margin-right: 3%;">每日学习单词数量：</view>
       <view wx:if="{{!countChange}}" style="display: flex;flex-direction: row;">
         <view class="boldfont">3</view>
@@ -25,7 +21,7 @@
     <view class="predict">
       <view>剩余单词数量：2347</view>
       <view>预计完成时间：2023.5.1</view>
-    </view>
+    </view> -->
   </view>
   <t-divider />
   <view class="changeList">
@@ -36,9 +32,9 @@
       <t-collapse-panel header="我的单词表" value="{{0}}">
         <t-button theme="primary" icon="add" content="新建词表" style="margin-bottom: 3%;" size="extra-small" class="margin"></t-button>
         <t-radio-group value="{{value}}" bind:change="onChange">
-          <view wx:for="{{3}}" wx:key="index" class="card {{value == index ? 'card--active' : ''}}">
+          <view wx:for="{{userbook}}" wx:key="index" class="card {{value == index ? 'card--active' : ''}}" wx:for-item="item">
             <!-- <t-icon wx:if="{{value == index}}" name="check" class="card__icon" /> -->
-            <t-radio value="{{index}}" label="单选" content="描述信息描述信息描述信息描述信息描述信息" icon="none" borderless />
+            <t-radio value="{{index}}" label="{{item.name}}" icon="none" borderless disabled="{{selectedBookId==item.id}}" />
           </view>
         </t-radio-group>
       </t-collapse-panel>
