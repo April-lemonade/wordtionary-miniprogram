@@ -47,7 +47,7 @@ Page({
     }
     if (!app.globalData.userInfo) {
       app.userInfoReadyCallback = res => {
-        console.log(app.globalData.userInfo.bookId + "huu")
+        // console.log(app.globalData.userInfo.bookId + "huu")
         if (app.globalData.userInfo.bookId != 0) {
           that.setData({
             selectedBookId: app.globalData.userInfo.bookId
@@ -65,7 +65,7 @@ Page({
       }
     })
     wx.request({
-      url: 'http://localhost:2346/wordlist/getuser?openid='+app.globalData.userInfo.openid,
+      url: 'http://localhost:2346/wordlist/getuser?openid='+app.globalData.userInfo.id,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -86,9 +86,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    console.log("shuaxin")
     this.setData({
       selectedBookId: app.globalData.bookId
     })
+    let that = this
+    if (app.globalData.userInfo.bookId != 0) {
+      that.setData({
+        selectedBookId: app.globalData.userInfo.bookId
+      })
+      wx.request({
+        url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
+        success: (res) => {
+          console.log(res)
+          that.setData({
+            bookName: res.data
+          })
+        }
+      })
+    }
   },
 
   /**
@@ -148,13 +164,15 @@ Page({
     }
   },
   onChange(e) {
+    console.log(this.data.userbook[e.detail.value].id)
     this.setData({
       value: e.detail.value,
       value1: -1
     });
+    console.log(e)
   },
   onChange1(e) {
-    console.log(this.data.selectedBookId)
+    console.log(this.data.systembook[e.detail.value])
     this.setData({
       value1: e.detail.value,
       value: -1,
@@ -170,7 +188,6 @@ Page({
     });
   },
 
-
   closeDialog() {
     const {
       dialogKey
@@ -184,9 +201,9 @@ Page({
     let that = this
     let finalvalue = -1
     if (this.data.value != -1)
-      finalvalue = this.data.value + 1
+      finalvalue = this.data.userbook[this.data.value].id
     else
-      finalvalue = this.data.value1 + 1
+      finalvalue = this.data.systembook[this.data.value1].id
     console.log("改变词书id为" + finalvalue)
     wx.request({
       url: 'http://localhost:2346/wordlist/change?bookId=' + finalvalue + '&openid=' + app.globalData.openid,
@@ -197,12 +214,35 @@ Page({
           success: (res) => {
             console.log(res)
             app.globalData.wordList = res.data
+            that.setData({
+              selectedBookId: finalvalue
+            })
+            wx.request({
+              url: 'http://localhost:2346/wordlist/getname?bookId=' + finalvalue,
+              success: (res) => {
+                console.log(res)
+                that.setData({
+                  bookName: res.data
+                })
+              }
+            })
+            // app.globalData.userInfo.bookId = finalvalue
+            // app.globalData.userInfo
             that.closeDialog()
+            that.onShow()
+            wx.switchTab({
+              url: '/pages/index/index',
+            })
+            app.onLaunch()
           }
         })
       }
     })
+  },
+
+  goNew(){
+    wx.navigateTo({
+      url: '/pages/newList/newList',
+    })
   }
-
-
 })

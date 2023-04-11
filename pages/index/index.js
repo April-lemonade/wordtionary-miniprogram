@@ -36,6 +36,7 @@ Page({
     count: 0,
   },
   onLoad() {
+    // console.log(this.data.wordList)
     let that = this
     if (!app.globalData.userInfo) {
       app.userInfoReadyCallback = res => {
@@ -66,6 +67,33 @@ Page({
           })
         }
       }
+    }else{
+      that.setData({
+        count:0
+      })
+      wx.request({
+        url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId,
+        success: (res) => {
+          console.log(res)
+          app.globalData.wordList = res.data
+          var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+          var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+          for (let i = 0; i < array.length; i++) {
+            array1[i] = ''
+            array[i] = -2
+          }
+          that.setData({
+            wordList: res.data,
+            word: res.data[that.data.count],
+            translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
+            loading: 0,
+            bookId: app.globalData.userInfo.bookId,
+            familiar: array,
+            class: array1
+          })
+          console.log(this.data.translation)
+        }
+      })
     }
   },
   getUserProfile(e) {
@@ -181,9 +209,16 @@ Page({
       url: 'http://localhost:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0],
       success: (res) => {
         console.log(res)
+        if(that.data.count==1){
+          that.setData({
+            count:0
+          })
+          that.onLoad()
+          console.log("refresh")
+        }
         that.setData({
           count: that.data.count + 1,
-          disabled:true       
+          disabled:true     
         })
         for (let i = 0; i < that.data.translation.length; i++) {
           array1[i] = ''
@@ -194,6 +229,7 @@ Page({
           translation: JSON.parse(that.data.wordList[that.data.count].oxfordTranslations),
           familiar: array1
         })
+        app.globalData.userInfo.wordId = that.data.word.id
       }
     })
   }

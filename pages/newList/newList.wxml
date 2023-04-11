@@ -1,0 +1,19 @@
+<!--pages/newList/newList.wxml-->
+<view>
+  <t-notice-bar visible="{{true}}" prefixIcon="{{false}}" content="前往网页端批量导入">
+    <view slot="prefix-icon">
+      <t-icon name="error-circle-filled" />
+    </view>
+  </t-notice-bar>
+  <form bindsubmit="submit">
+    <t-input name="name" label="词表名称：" placeholder="请控制在十个字以内" maxlength="{{10}}" model:value="{{list.name}}" />
+    <view class="textarea-example">
+      <text class="textarea-example__label">导入单词</text>
+      <t-textarea name="words" model:value="{{list.word}}" t-class="external-class" placeholder="一行一个单词" bordered disableDefaultPadding="{{true}}" indicator style="height: 900rpx" />
+    </view>
+    <button style="background-color: #0052d9;color: white;width: fit-content;" formType="submit">保存</button>
+  </form>
+  <t-dialog visible="{{disable}}" title="正在处理中，请稍后" content="">
+    <t-image slot="middle" t-class="image-host dialog-image" src="/assets/loading.png" />
+  </t-dialog>
+</view>

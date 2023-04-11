@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/newList/newList",
     "pages/me/index",
     "pages/books/index"
   ],
@@ -19,7 +20,8 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页"
-      },{
+      },
+      {
         "pagePath": "pages/books/index",
         "text": "首页"
       },
