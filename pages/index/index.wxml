@@ -57,7 +57,7 @@
       <view class="overview">
         <view wx:for="{{translation.senses}}" wx:key="index" wx:for-item="item">
           <t-swipe-cell>
-            <t-cell bordered="{{true}}" title="{{item.notes[0].text}} {{item.translations[0].text}}" t-class-title="{{'class'+familiar[index]}}"/>
+            <t-cell bordered="{{true}}" title="{{item.notes[item.notes.length-1].text}} {{item.translations[0].text}}" t-class-title="{{'class'+familiar[index]}}"/>
             <!-- <view slot="left" class="btn-wrapper">
               <view class="btn kill-btn" bind:tap="onKill">KILL</view>
             </view> -->

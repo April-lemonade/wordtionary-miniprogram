@@ -31,16 +31,17 @@ Page({
     memory: -2,
     familiar: [],
     disabled: true,
-    style:''
+    style: '',
+    wordList: [],
+    count: 0,
   },
   onLoad() {
     let that = this
     if (!app.globalData.userInfo) {
       app.userInfoReadyCallback = res => {
-        // console.log(app.globalData.userInfo.bookId)
         if (app.globalData.userInfo.bookId != 0) {
           wx.request({
-            url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.bookId,
+            url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId,
             success: (res) => {
               console.log(res)
               app.globalData.wordList = res.data
@@ -51,14 +52,16 @@ Page({
                 array[i] = -2
               }
               that.setData({
-                word: res.data[0],
-                translation: JSON.parse(res.data[0].oxfordTranslations),
+                wordList: res.data,
+                word: res.data[that.data.count],
+                translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
                 loading: 0,
                 bookId: app.globalData.userInfo.bookId,
                 familiar: array,
                 class: array1
               })
-              // console.log(this.data.familiar)
+              console.log(this.data.translation)
+
             }
           })
         }
@@ -136,7 +139,7 @@ Page({
     var arry = this.data.familiar
     arry[e.target.dataset.index] = -1
     this.setData({
-      familiar:arry
+      familiar: arry
     })
     if (!arry.includes(-2)) {
       this.setData({
@@ -148,7 +151,7 @@ Page({
     var arry = this.data.familiar
     arry[e.target.dataset.index] = 1
     this.setData({
-      familiar:arry
+      familiar: arry
     })
     if (!arry.includes(-2)) {
       this.setData({
@@ -160,7 +163,7 @@ Page({
     var arry = this.data.familiar
     arry[e.target.dataset.index] = 2
     this.setData({
-      familiar:arry
+      familiar: arry
     })
     if (!arry.includes(-2)) {
       this.setData({
@@ -168,7 +171,30 @@ Page({
       })
     }
   },
-  next(){
-    
+  next() {
+    console.log(this.data.word)
+    var array1 = []
+    let that = this
+    let arr = this.data.familiar
+    arr.sort()
+    wx.request({
+      url: 'http://localhost:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0],
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          count: that.data.count + 1,
+          disabled:true       
+        })
+        for (let i = 0; i < that.data.translation.length; i++) {
+          array1[i] = ''
+          array[i] = -2
+        }
+        that.setData({
+          word: that.data.wordList[that.data.count],
+          translation: JSON.parse(that.data.wordList[that.data.count].oxfordTranslations),
+          familiar: array1
+        })
+      }
+    })
   }
 })
