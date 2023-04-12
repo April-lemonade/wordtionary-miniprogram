@@ -1,6 +1,6 @@
 <!--pages/newList/newList.wxml-->
 <view>
-  <t-notice-bar visible="{{true}}" prefixIcon="{{false}}" content="前往网页端批量导入">
+  <t-notice-bar visible="{{true}}" content="前往网页端批量导入">
     <view slot="prefix-icon">
       <t-icon name="error-circle-filled" />
     </view>

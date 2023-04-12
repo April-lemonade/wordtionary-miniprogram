@@ -174,4 +174,9 @@ Page({
       }
     })
   },
+  onIconTap(){
+    wx.navigateTo({
+      url: '/pages/account/account',
+    })
+  }
 })

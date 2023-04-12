@@ -6,20 +6,26 @@
 </view> -->
 <!-- “The past is done. The future has plenty of room for change.”Anonymous -->
 <view class="container" style="width: 100%;left: 0;top: 0;">
-  <view class="info">
-    <t-avatar class="avatar-example" size="large" image="{{avatarUrl}}" />
-    <view style="font-weight: bold;height: max-content;font-size: 20px;color: white;margin-top: 83px;margin-left: 30px;">
-      <!-- <view wx:if="{{name==''}}">
+  <view style="display: flex;flex-direction: row;justify-content: space-between;">
+    <view class="info">
+      <t-avatar class="avatar-example" size="large" image="{{avatarUrl}}" />
+      <view style="font-weight: bold;height: max-content;font-size: 20px;color: white;margin-top: 83px;margin-left: 30px;">
+        <!-- <view wx:if="{{name==''}}">
         <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
       </view>
        -->
-      <block wx:if="{{name==''}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      </block>
-      <view wx:else>
-        {{name}}
+        <block wx:if="{{name==''}}">
+          <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
+        </block>
+        <view wx:else>
+          {{name}}
+        </view>
       </view>
     </view>
+    <view style="margin-top:70px;margin-right: 5%;">
+      <t-icon name="setting" size="80rpx" color="white" bind:click="onIconTap" />
+    </view>
+
   </view>
   <view style="border-style: solid;border-color: white;border-top-left-radius: 10px;border-top-right-radius: 10px;background-color: white;">
     <t-tabs defaultValue="{{0}}" bind:change="onTabsChange" style="margin-top: 5px;" bind:click="onTabsClick" t-class="custom-tabs">

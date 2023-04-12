@@ -33,8 +33,11 @@
   </view>
   <view class="userinfo">
     <block wx:if="{{loading==1}}">
-      <image src="/assets/loading.png" style="width: 75%;margin-top: 10%;" />
-      <t-loading theme="dots" size="80rpx" class="wrapper" text="单词正在运输途中，请稍后" layout="vertical" />
+      <t-dialog visible="{{true}}" title="单词正在运输途中，请稍后" content="">
+        <t-image slot="middle" t-class="image-host dialog-image" src="/assets/loading.png" />
+      </t-dialog>
+      <!-- <image src="/assets/loading.png" style="width: 75%;margin-top: 10%;" />
+      <t-loading theme="dots" size="80rpx" class="wrapper" text="单词正在运输途中，请稍后" layout="vertical" /> -->
     </block>
     <block wx:if="{{loading==0&&bookId==0}}">
       <image src="/assets/unlogin.png" style="width: 75%;margin-top: 10%;" />
@@ -57,7 +60,7 @@
       <view class="overview">
         <view wx:for="{{translation.senses}}" wx:key="index" wx:for-item="item">
           <t-swipe-cell>
-            <t-cell bordered="{{true}}" title="{{item.notes[item.notes.length-1].text}} {{item.translations[0].text}}" t-class-title="{{'class'+familiar[index]}}"/>
+            <t-cell bordered="{{true}}" title="{{item.notes[item.notes.length-1].text}} {{item.translations[0].text}}" t-class-title="{{'class'+familiar[index]}}" />
             <!-- <view slot="left" class="btn-wrapper">
               <view class="btn kill-btn" bind:tap="onKill">KILL</view>
             </view> -->
@@ -67,9 +70,9 @@
               <view class="btn edit-btn" data-index="{{index}}" bind:tap="onFamiliar">熟悉</view>
             </view>
           </t-swipe-cell>
-          <view style="margin-left:5%;margin-bottom: 5%;" wx:for="{{item.examples}}" wx:for-index="childindex" wx:for-item="item1" >
-            <view >{{childindex+1}}. {{item1.text}}</view>
-            <view >{{item1.translations[0].text}}</view>
+          <view style="margin-left:5%;margin-bottom: 5%;" wx:for="{{item.examples}}" wx:for-index="childindex" wx:for-item="item1">
+            <view>{{childindex+1}}. {{item1.text}}</view>
+            <view>{{item1.translations[0].text}}</view>
           </view>
         </view>
       </view>

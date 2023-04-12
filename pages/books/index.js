@@ -65,7 +65,7 @@ Page({
       }
     })
     wx.request({
-      url: 'http://localhost:2346/wordlist/getuser?openid='+app.globalData.userInfo.id,
+      url: 'http://localhost:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -204,7 +204,11 @@ Page({
       finalvalue = this.data.userbook[this.data.value].id
     else
       finalvalue = this.data.systembook[this.data.value1].id
-    console.log("改变词书id为" + finalvalue)
+    // console.log("改变词书id为" + finalvalue)
+    this.setData({
+      value1: -1,
+      value: -1
+    })
     wx.request({
       url: 'http://localhost:2346/wordlist/change?bookId=' + finalvalue + '&openid=' + app.globalData.openid,
       success: (res) => {
@@ -240,9 +244,16 @@ Page({
     })
   },
 
-  goNew(){
+  goNew() {
     wx.navigateTo({
-      url: '/pages/newList/newList',
+      url: '/pages/newList/newList?id=0',
+    })
+  },
+
+  goEdit() {
+    console.log("???" + this.data.userbook[this.data.value].id)
+    wx.navigateTo({
+      url: '/pages/newList/newList?id=' + this.data.userbook[this.data.value].id,
     })
   }
 })

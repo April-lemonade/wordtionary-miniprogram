@@ -7,6 +7,7 @@
     "ec-canvas": "/ec-canvas/ec-canvas",
     "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell",
     "t-date-time-picker": "/miniprogram_npm/tdesign-miniprogram/date-time-picker/date-time-picker",
-    "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button"
+    "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
+    "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon"
   }
 }

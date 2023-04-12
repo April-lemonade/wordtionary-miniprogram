@@ -1,0 +1,14 @@
+<view class="container">
+  <t-notice-bar visible="{{true}}" content="账号密码用于登录网页端">
+    <view slot="prefix-icon">
+      <t-icon name="error-circle-filled"></t-icon>
+    </view>
+  </t-notice-bar>
+  <form style="width: 100%;text-align: center;display: flex;flex-direction: column;" bindsubmit="submit">
+    <image style="width: 400rpx;height: 200rpx;" src="/assets/logo.png" />
+    <t-input label="账号" name="name" model:value="{{account}}" placeholder="仅允许英文和数字" value="{{account}}" clearable disabled="{{!disabled}}" />
+    <t-input label="密码" type="password" placeholder="仅允许英文和数字" name="pwd" model:value="{{pwd}}" value="{{pwd}}" clearable disabled="{{!disabled}}" />
+    <button wx:if="{{disabled}}" style="background-color: #0052d9;color: white;width: fit-content;margin-top: 5%;" formType="submit">保存</button>
+    <t-button style="margin-top: 5%;" wx:if="{{!disabled}}" theme="light" size="medium" bindtap="edit">修改</t-button>
+  </form>
+</view>

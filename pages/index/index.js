@@ -209,17 +209,18 @@ Page({
       url: 'http://localhost:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0],
       success: (res) => {
         console.log(res)
-        if(that.data.count==1){
+        that.setData({
+          count: that.data.count + 1,
+          disabled:true     
+        })
+        if(that.data.count==10){
           that.setData({
             count:0
           })
           that.onLoad()
           console.log("refresh")
         }
-        that.setData({
-          count: that.data.count + 1,
-          disabled:true     
-        })
+        
         for (let i = 0; i < that.data.translation.length; i++) {
           array1[i] = ''
           array[i] = -2
