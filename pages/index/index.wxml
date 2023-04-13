@@ -43,7 +43,7 @@
       <image src="/assets/unlogin.png" style="width: 75%;margin-top: 10%;" />
       <view>请先选择一本词书</view>
     </block>
-    <view wx:if="{{loading==0&&bookId!=0}}" class="card">
+    <view wx:if="{{loading==0&&bookId!=0&&finish==0}}" class="card">
       <view class="word">
         <p>{{word.word}}</p>
       </view>
@@ -77,9 +77,13 @@
         </view>
       </view>
       <view style="display: flex;flex-direction: row;width: 90%;">
-        <t-button style="margin-right: 5%;" theme="danger" size="small">KILL</t-button>
+        <!-- <t-button style="margin-right: 5%;" theme="danger" size="small">KILL</t-button> -->
         <t-button theme="primary" size="small" disabled="{{disabled}}" bindtap="next">下一个</t-button>
       </view>
+    </view>
+    <view wx:if="{{finish==1&&finish==1}}">
+      <image src="/assets/unlogin.png" style="width: 100%;margin-top: 10%;" />
+      <view>已经背完这本啦，真了不起！</view>
     </view>
   </view>
 </view>

@@ -34,10 +34,14 @@ Page({
     style: '',
     wordList: [],
     count: 0,
+    finish: 0
   },
   onLoad() {
     // console.log(this.data.wordList)
     let that = this
+    // this.setData({
+    //   finish:0
+    // })
     if (!app.globalData.userInfo) {
       app.userInfoReadyCallback = res => {
         if (app.globalData.userInfo.bookId != 0) {
@@ -45,56 +49,82 @@ Page({
             url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId,
             success: (res) => {
               console.log(res)
-              app.globalData.wordList = res.data
-              var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
-              var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
-              for (let i = 0; i < array.length; i++) {
-                array1[i] = ''
-                array[i] = -2
-              }
               that.setData({
-                wordList: res.data,
-                word: res.data[that.data.count],
-                translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
-                loading: 0,
                 bookId: app.globalData.userInfo.bookId,
-                familiar: array,
-                class: array1
               })
-              console.log(this.data.translation)
-
+              if (res.data.length != 0) {
+                app.globalData.wordList = res.data
+                var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+                var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+                for (let i = 0; i < array.length; i++) {
+                  array1[i] = ''
+                  array[i] = -2
+                }
+                that.setData({
+                  wordList: res.data,
+                  word: res.data[that.data.count],
+                  translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
+                  loading: 0,
+                  finish: 0,
+                  bookId: app.globalData.userInfo.bookId,
+                  familiar: array,
+                  class: array1
+                })
+                // if (!res.data.translation) {
+                //   that.setData({
+                //     finish: 1
+                //   })
+                // }
+                console.log(this.data.translation)
+              } else {
+                that.setData({
+                  finish: 1,
+                  loading: 0
+                })
+              }
             }
           })
         }
       }
-    }else{
+    } else {
       that.setData({
-        count:0
+        count: 0
       })
       wx.request({
         url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId,
         success: (res) => {
           console.log(res)
-          app.globalData.wordList = res.data
-          var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
-          var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
-          for (let i = 0; i < array.length; i++) {
-            array1[i] = ''
-            array[i] = -2
-          }
           that.setData({
-            wordList: res.data,
-            word: res.data[that.data.count],
-            translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
-            loading: 0,
             bookId: app.globalData.userInfo.bookId,
-            familiar: array,
-            class: array1
           })
-          console.log(this.data.translation)
+          if (res.data.length != 0) {
+            app.globalData.wordList = res.data
+            var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+            var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+            for (let i = 0; i < array.length; i++) {
+              array1[i] = ''
+              array[i] = -2
+            }
+            that.setData({
+              wordList: res.data,
+              word: res.data[that.data.count],
+              translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
+              loading: 0,
+              finish: 0,
+              familiar: array,
+              class: array1
+            })
+            console.log(this.data.translation)
+          } else {
+            that.setData({
+              finish: 1,
+              loading: 0
+            })
+          }
         }
       })
     }
+    console.log(this.data.finish)
   },
   getUserProfile(e) {
     let that = this
@@ -150,6 +180,7 @@ Page({
   },
   onShow: function () {
     let that = this
+    // this.onLoad()
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
@@ -211,26 +242,31 @@ Page({
         console.log(res)
         that.setData({
           count: that.data.count + 1,
-          disabled:true     
+          disabled: true
         })
-        if(that.data.count==10){
+        if (that.data.count == 10) {
           that.setData({
-            count:0
+            count: 0
           })
           that.onLoad()
           console.log("refresh")
         }
-        
-        for (let i = 0; i < that.data.translation.length; i++) {
-          array1[i] = ''
-          array[i] = -2
+        if (this.data.wordList.length < 10 && this.data.count == this.data.wordList.length) {
+          that.setData({
+            finish: 1
+          })
+        } else {
+          for (let i = 0; i < that.data.translation.length; i++) {
+            array1[i] = ''
+            array[i] = -2
+          }
+          that.setData({
+            word: that.data.wordList[that.data.count],
+            translation: JSON.parse(that.data.wordList[that.data.count].oxfordTranslations),
+            familiar: array1
+          })
+          app.globalData.userInfo.wordId = that.data.word.id
         }
-        that.setData({
-          word: that.data.wordList[that.data.count],
-          translation: JSON.parse(that.data.wordList[that.data.count].oxfordTranslations),
-          familiar: array1
-        })
-        app.globalData.userInfo.wordId = that.data.word.id
       }
     })
   }

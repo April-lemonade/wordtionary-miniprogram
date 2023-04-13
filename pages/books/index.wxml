@@ -32,7 +32,7 @@
       <t-collapse-panel header="我的单词表" value="{{0}}">
         <view style="display: flex;flex-direction: row;justify-content: space-between;">
           <t-button theme="primary" icon="add" content="新建词表" style="margin-bottom: 3%;" size="extra-small" bindtap="goNew" class="margin" />
-          <t-button theme="light" icon="edit" content="编辑词表" style="margin-bottom: 3%;" size="extra-small" bindtap="goEdit" class="margin" disabled="{{value==-1}}" />
+          <!-- <t-button theme="light" icon="edit" content="编辑词表" style="margin-bottom: 3%;" size="extra-small" bindtap="goEdit" class="margin" disabled="{{value==-1}}" /> -->
         </view>
         <t-radio-group value="{{value}}" bind:change="onChange">
           <view wx:for="{{userbook}}" wx:key="index" class="card {{value == index ? 'card--active' : ''}}" wx:for-item="item">
