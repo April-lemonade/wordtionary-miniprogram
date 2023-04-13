@@ -1,0 +1,5 @@
+/* pages/memory/memory.wxss */
+.container{
+  width: 90%;
+  margin: 5%;
+}

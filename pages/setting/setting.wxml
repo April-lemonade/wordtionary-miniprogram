@@ -1,0 +1,5 @@
+<!--pages/setting/setting.wxml-->
+<view class="container">
+  <t-cell title="账号设置" bindtap="goAccount" hover arrow />
+  <t-cell title="记忆设置" bindtap="goMemory" hover arrow />
+</view>

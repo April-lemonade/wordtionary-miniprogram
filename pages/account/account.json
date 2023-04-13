@@ -5,5 +5,5 @@
     "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",
     "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button"
   },
-  "navigationBarTitleText": "设置"
+  "navigationBarTitleText": "账号设置"
 }

@@ -1,0 +1,10 @@
+<!--pages/memory/memory.wxml-->
+<view class="container">
+  <form bindsubmit="submit">
+    <t-input label="每天背单词" placeholder="填写个数" suffix="个" align="center" type="number" />
+    <t-input label="熟悉单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" />
+    <t-input label="模糊单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" />
+    <t-input label="陌生单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" />
+    <button wx:if="{{true}}" style="background-color: #0052d9;color: white;width: fit-content;margin-top: 5%;" formType="submit">保存</button>
+  </form>
+</view>

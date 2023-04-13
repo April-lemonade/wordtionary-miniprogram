@@ -1,0 +1,5 @@
+/* pages/setting/setting.wxss */
+.container{
+  width: 90%;
+  margin: 5%;
+}
