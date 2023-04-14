@@ -1,18 +1,37 @@
-// pages/setting/setting.js
+// pages/dictionary/dictionary.js
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    value: 0,
+  },
+  onChange(e) {
+    this.setData({
+      value: e.detail.value
+    });
+    console.log(this.data.value)
+    wx.request({
+      url: 'http://localhost:2346/user/changedic?openid=' + app.globalData.userInfo.id + '&dictionaryId=' + this.data.value,
+      success: (res) => {
+        app.onLaunch()
+        wx.switchTab({
+          url: '/pages/index/index',
+        })
+      }
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.setData({
+      value: app.globalData.userInfo.dictionaryId
+    })
   },
 
   /**
@@ -62,20 +81,5 @@ Page({
    */
   onShareAppMessage() {
 
-  },
-  goAccount() {
-    wx.navigateTo({
-      url: '/pages/account/account',
-    })
-  },
-  goMemory() {
-    wx.navigateTo({
-      url: '/pages/memory/memory',
-    })
-  },
-  goDictionary() {
-    wx.navigateTo({
-      url: '/pages/dictionary/dictionary',
-    })
   }
 })

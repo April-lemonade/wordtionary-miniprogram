@@ -194,7 +194,7 @@ Page({
   },
   onIconTap() {
     wx.navigateTo({
-      url: '/pages/account/account',
+      url: '/pages/setting/setting',
     })
   }
 })

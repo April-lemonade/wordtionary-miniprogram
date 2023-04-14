@@ -1,13 +1,13 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/memory/memory",
     "pages/setting/setting",
-    "pages/index/index",
     "pages/newList/newList",
     "pages/me/index",
     "pages/books/index",
-    "pages/account/account"
-    
+    "pages/account/account",
+    "pages/dictionary/dictionary"
   ],
   "window": {
     "backgroundTextStyle": "light",

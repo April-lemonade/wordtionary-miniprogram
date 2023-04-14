@@ -26,6 +26,7 @@ Page({
       uni: '/saʊnd/'
     },
     translation: {},
+    translation1: {},
     openid: '',
     loading: 1,
     memory: -2,
@@ -34,97 +35,81 @@ Page({
     style: '',
     wordList: [],
     count: 0,
-    finish: 0
+    finish: 0,
+    dictionaryId: 1
   },
   onLoad() {
-    // console.log(this.data.wordList)
     let that = this
-    // this.setData({
-    //   finish:0
-    // })
     if (!app.globalData.userInfo) {
       app.userInfoReadyCallback = res => {
         if (app.globalData.userInfo.bookId != 0) {
-          wx.request({
-            url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId,
-            success: (res) => {
-              console.log(res)
-              that.setData({
-                bookId: app.globalData.userInfo.bookId,
-              })
-              if (res.data.length != 0) {
-                app.globalData.wordList = res.data
-                var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
-                var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
-                for (let i = 0; i < array.length; i++) {
-                  array1[i] = ''
-                  array[i] = -2
-                }
-                that.setData({
-                  wordList: res.data,
-                  word: res.data[that.data.count],
-                  translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
-                  loading: 0,
-                  finish: 0,
-                  bookId: app.globalData.userInfo.bookId,
-                  familiar: array,
-                  class: array1
-                })
-                // if (!res.data.translation) {
-                //   that.setData({
-                //     finish: 1
-                //   })
-                // }
-                console.log(this.data.translation)
-              } else {
-                that.setData({
-                  finish: 1,
-                  loading: 0
-                })
-              }
-            }
-          })
+          that.getInfo()
         }
       }
     } else {
       that.setData({
         count: 0
       })
-      wx.request({
-        url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId,
-        success: (res) => {
-          console.log(res)
-          that.setData({
-            bookId: app.globalData.userInfo.bookId,
-          })
-          if (res.data.length != 0) {
-            app.globalData.wordList = res.data
-            var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
-            var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+      this.getInfo()
+    }
+    console.log(this.data.finish)
+  },
+
+  getInfo() {
+    let that = this
+    wx.request({
+      url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId + '&dictionaryId=' + app.globalData.userInfo.dictionaryId,
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          bookId: app.globalData.userInfo.bookId,
+          dictionaryId: app.globalData.userInfo.dictionaryId
+        })
+        if (res.data.length != 0) {
+          app.globalData.wordList = res.data
+          var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+          var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+          if (app.globalData.userInfo.dictionaryId == 0) {
             for (let i = 0; i < array.length; i++) {
               array1[i] = ''
               array[i] = -2
             }
             that.setData({
-              wordList: res.data,
-              word: res.data[that.data.count],
-              translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
-              loading: 0,
-              finish: 0,
               familiar: array,
               class: array1
             })
-            console.log(this.data.translation)
-          } else {
+          }
+          if (app.globalData.userInfo.dictionaryId == 1) {
+            var camarray = new Array(JSON.parse(res.data[0].cambridgeTranslations).length);
+            var camarray1 = new Array(JSON.parse(res.data[0].cambridgeTranslations).length);
+            for (let i = 0; i < camarray.length; i++) {
+              camarray1[i] = ''
+              camarray[i] = -2
+            }
             that.setData({
-              finish: 1,
-              loading: 0
+              familiar: camarray,
+              class: camarray1
             })
           }
+          that.setData({
+            wordList: res.data,
+            word: res.data[that.data.count],
+            translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
+            translation1: JSON.parse(res.data[that.data.count].cambridgeTranslations),
+            loading: 0,
+            finish: 0,
+            bookId: app.globalData.userInfo.bookId,
+            dictionaryId: app.globalData.userInfo.dictionaryId
+          })
+          console.log(this.data.translation1)
+        } else {
+          that.setData({
+            finish: 1,
+            loading: 0
+          })
         }
-      })
-    }
-    console.log(this.data.finish)
+      }
+    })
   },
   getUserProfile(e) {
     let that = this
@@ -195,6 +180,7 @@ Page({
   //   });
   // },
   onStrange(e) {
+    console.log(this.data.familiar)
     var arry = this.data.familiar
     arry[e.target.dataset.index] = -1
     this.setData({

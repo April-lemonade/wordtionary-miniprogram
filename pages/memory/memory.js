@@ -5,7 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    dailycount: 10,
+    familiarday: 4,
+    blurday: 2,
+    strangeday: 1,
+    show: false
   },
 
   /**
@@ -62,5 +66,11 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  edit() {
+    this.setData({
+      show: true
+    })
   }
 })

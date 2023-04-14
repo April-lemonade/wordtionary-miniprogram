@@ -1,0 +1,22 @@
+<!--pages/dictionary/dictionary.wxml-->
+<view>
+  <t-notice-bar visible="{{true}}" content="改变词源不影响背单词记录，仅仅是展示释义不同">
+    <view slot="prefix-icon">
+      <t-icon name="error-circle-filled"></t-icon>
+    </view>
+  </t-notice-bar>
+  <view>
+    <t-radio-group value="{{value}}" bind:change="onChange">
+      <view class="card {{value == 0 ? 'card--active' : ''}}">
+        <t-icon wx:if="{{value == 0}}" name="check" t-class="card__icon" />
+        <t-radio value="{{0}}" label="牛津词典" icon="none" borderless/>
+        <image style="width: 180px;height: 50px;margin-left: 5%;" src="https://tse1-mm.cn.bing.net/th/id/OIP-C.H6XV5vJZ_3qC01HNiZjTngHaCB?pid=ImgDet&rs=1"></image>
+      </view>
+      <view class="card {{value == 1 ? 'card--active' : ''}}">
+        <t-icon wx:if="{{value == 1}}" name="check" t-class="card__icon" />
+        <t-radio value="{{1}}" label="剑桥词典" icon="none" borderless />
+        <image style="width: 150px;height: 50px;margin-left: 5%;" src="https://tse1-mm.cn.bing.net/th/id/OIP-C.VA4jrc3CTKTzcJICg9L3MwAAAA?pid=ImgDet&rs=1"></image>
+      </view>
+    </t-radio-group>
+  </view>
+</view>

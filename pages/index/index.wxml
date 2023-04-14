@@ -57,7 +57,7 @@
           <text style="color: #0052d9;text-decoration:underline" bindtap="playunisound">[{{translation.pronunciations[1].phoneticSpelling}}]</text>
         </view>
       </view>
-      <view class="overview">
+      <view class="overview" wx:if="{{dictionaryId==0}}">
         <view wx:for="{{translation.senses}}" wx:key="index" wx:for-item="item">
           <t-swipe-cell>
             <t-cell bordered="{{true}}" title="{{item.notes[item.notes.length-1].text}} {{item.translations[0].text}}" t-class-title="{{'class'+familiar[index]}}" />
@@ -74,6 +74,26 @@
             <view>{{childindex+1}}. {{item1.text}}</view>
             <view>{{item1.translations[0].text}}</view>
           </view>
+        </view>
+      </view>
+      <view class="overview" wx:if="{{dictionaryId==1}}">
+        <view wx:for="{{translation1}}" wx:key="index" wx:for-item="item">
+          <t-swipe-cell>
+            <t-cell bordered="{{true}}" title="{{item.definition}}" t-class-title="{{'class'+familiar[index]}}" />
+            <rich-text nodes="{{item.examples}}"></rich-text>
+            <!-- <view slot="left" class="btn-wrapper">
+              <view class="btn kill-btn" bind:tap="onKill">KILL</view>
+            </view> -->
+            <view slot="right" class="btn-wrapper">
+              <view class="btn delete-btn" data-index="{{index}}" bind:tap="onStrange">陌生</view>
+              <view class="btn favor-btn" data-index="{{index}}" bind:tap="onBlur">模糊</view>
+              <view class="btn edit-btn" data-index="{{index}}" bind:tap="onFamiliar">熟悉</view>
+            </view>
+          </t-swipe-cell>
+          <!-- <view style="margin-left:5%;margin-bottom: 5%;" wx:for="{{item.examples}}" wx:for-index="childindex" wx:for-item="item1">
+            <view>{{childindex+1}}. {{item1.text}}</view>
+            <view>{{item1.translations[0].text}}</view>
+          </view> -->
         </view>
       </view>
       <view style="display: flex;flex-direction: row;width: 90%;">

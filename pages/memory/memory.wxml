@@ -1,10 +1,13 @@
 <!--pages/memory/memory.wxml-->
 <view class="container">
   <form bindsubmit="submit">
-    <t-input label="每天背单词" placeholder="填写个数" suffix="个" align="center" type="number" />
-    <t-input label="熟悉单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" />
-    <t-input label="模糊单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" />
-    <t-input label="陌生单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" />
-    <button wx:if="{{true}}" style="background-color: #0052d9;color: white;width: fit-content;margin-top: 5%;" formType="submit">保存</button>
+    <t-input label="每天背单词" placeholder="填写个数" suffix="个" align="center" type="number" model:value="{{dailycount}}" value="{{dailycount}}" disabled="{{!show}}" />
+    <t-input label="熟悉单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" model:value="{{familiarday}}" value="{{familiarday}}" disabled="{{!show}}" />
+    <t-input label="模糊单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" model:value="{{blurday}}" value="{{blurday}}" disabled="{{!show}}" />
+    <t-input label="陌生单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" model:value="{{strangeday}}" value="{{strangeday}}" disabled="{{!show}}" />
+    <view style="width: 100%;text-align: center;">
+      <button wx:if="{{show}}" style="background-color: #0052d9;color: white;width: fit-content;margin-top: 5%;" formType="submit">保存</button>
+      <t-button style="margin-top: 5%;" wx:if="{{!show}}" theme="light" size="medium" bindtap="edit">修改</t-button>
+    </view>
   </form>
 </view>

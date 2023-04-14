@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "t-notice-bar": "/miniprogram_npm/tdesign-miniprogram/notice-bar/notice-bar",
+    "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",
+    "t-radio-group": "/miniprogram_npm/tdesign-miniprogram/radio-group/radio-group",
+    "t-radio": "/miniprogram_npm/tdesign-miniprogram/radio/radio"
+  }
+}
