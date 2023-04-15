@@ -10,6 +10,8 @@ Page({
     styleIsolation: 'apply-shared',
   },
   data: {
+    loading: 1,
+    loading1: 1,
     countChange: false,
     value: -1,
     value1: -1,
@@ -23,7 +25,8 @@ Page({
     systembook: [],
     userbook: [],
     bookName: '',
-    selectedBookId: -1
+    selectedBookId: -1,
+    deleteConfirm: false
   },
 
   /**
@@ -56,23 +59,26 @@ Page({
       }
     }
     wx.request({
-      url: 'http://localhost:2346/wordlist/getadmin',
-      success: (res) => {
-        console.log(res)
-        that.setData({
-          systembook: res.data
-        })
-      }
-    })
-    wx.request({
       url: 'http://localhost:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
       success: (res) => {
         console.log(res)
         that.setData({
-          userbook: res.data
+          userbook: res.data,
+          loading: 0
         })
       }
     })
+    wx.request({
+      url: 'http://localhost:2346/wordlist/getadmin',
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          systembook: res.data,
+          loading1: 0
+        })
+      }
+    })
+
   },
 
   /**
@@ -259,6 +265,41 @@ Page({
     console.log("???" + this.data.userbook[this.data.value].id)
     wx.navigateTo({
       url: '/pages/newList/newList?id=' + this.data.userbook[this.data.value].id,
+    })
+  },
+  deleteCancel() {
+    this.setData({
+      deleteConfirm: false
+    })
+  },
+  goDelete() {
+    this.setData({
+      deleteConfirm: true
+    })
+  },
+  deleteList() {
+    let that = this
+    let finalvalue = -1
+    if (this.data.value != -1)
+      finalvalue = this.data.userbook[this.data.value].id
+    else
+      finalvalue = this.data.systembook[this.data.value1].id
+    // console.log("改变词书id为" + finalvalue)
+    this.setData({
+      value1: -1,
+      value: -1
+    })
+    wx.request({
+      url: 'http://localhost:2346/wordlist/deletelist?bookid=' + finalvalue,
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          userbook: [],
+          deleteConfirm: false
+        })
+        app.onLaunch()
+        that.onLoad()
+      }
     })
   }
 })

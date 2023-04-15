@@ -9,7 +9,8 @@
     "t-radio-group": "/miniprogram_npm/tdesign-miniprogram/radio-group/radio-group",
     "t-radio": "/miniprogram_npm/tdesign-miniprogram/radio/radio",
     "t-fab": "/miniprogram_npm/tdesign-miniprogram/fab/fab",
-    "t-dialog": "/miniprogram_npm/tdesign-miniprogram/dialog/dialog"
+    "t-dialog": "/miniprogram_npm/tdesign-miniprogram/dialog/dialog",
+    "t-loading": "/miniprogram_npm/tdesign-miniprogram/loading/loading"
   },
   "navigationBarTitleText": "单词表"
 }

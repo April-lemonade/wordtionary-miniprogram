@@ -8,7 +8,7 @@
   /* align-items: center; */
   /* justify-content: space-between; */
   /* padding: 200rpx 0; */
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   margin-bottom: 100px;
 }
 
@@ -68,10 +68,10 @@
   border-right-color: transparent;
 }
 
-/* .card__icon {
-  color: white;
-  position: fixed;
-   left: 1.5px; 
-   top: 1.5px; 
-  z-index: 1;
-} */
+.card__icon {
+  color: #fff;
+  position: absolute;
+  left: 1.5px;
+  top: 1.5px;
+  z-index: 4;
+}

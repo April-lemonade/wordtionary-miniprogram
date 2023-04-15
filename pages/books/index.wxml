@@ -25,14 +25,16 @@
   </view>
   <t-divider />
   <view class="changeList">
-    <view style="display: flex;flex-direction: row;width: 100%;justify-content: space-between;">
+    <view style="display: flex;flex-direction: row;width: 100%;">
       <view class="boldfont" style="color: black;font-size: 18px;">更换词表</view>
     </view>
     <t-collapse style="width: 100%;" defaultValue="{{[0]}}" expandMutex expandIcon>
       <t-collapse-panel header="我的单词表" value="{{0}}">
+        <t-loading theme="dots" size="80rpx" class="wrapper" wx:if="{{loading == 1}}" />
         <view style="display: flex;flex-direction: row;justify-content: space-between;">
           <t-button theme="primary" icon="add" content="新建词表" style="margin-bottom: 3%;" size="extra-small" bindtap="goNew" class="margin" />
-          <!-- <t-button theme="light" icon="edit" content="编辑词表" style="margin-bottom: 3%;" size="extra-small" bindtap="goEdit" class="margin" disabled="{{value==-1}}" /> -->
+          <t-button theme="light" icon="edit" content="重命名" style="margin-bottom: 3%;" size="extra-small" bindtap="goEdit" class="margin" disabled="{{value==-1}}" />
+          <t-button theme="danger" icon="delete" disabled="{{value==-1}}" size="extra-small" bindtap="goDelete">删除词表</t-button>
         </view>
         <t-radio-group value="{{value}}" bind:change="onChange">
           <view wx:for="{{userbook}}" wx:key="index" class="card {{value == index ? 'card--active' : ''}}" wx:for-item="item">
@@ -42,6 +44,7 @@
         </t-radio-group>
       </t-collapse-panel>
       <t-collapse-panel header="系统单词表" value="{{1}}">
+        <t-loading theme="dots" size="80rpx" class="wrapper" wx:if="{{loading1 == 1}}" />
         <t-radio-group value="{{value1}}" bind:change="onChange1">
           <view wx:for="{{systembook}}" wx:key="index" wx:for-item="item" class="card {{value1 == index ? 'card--active' : ''}}">
             <!-- <t-icon wx:if="{{value1 == index}}" name="check" t-class="card__icon" /> -->
@@ -50,13 +53,8 @@
         </t-radio-group>
       </t-collapse-panel>
     </t-collapse>
-    <!-- <t-button theme="primary" icon="add" content="新建词表" style="margin-bottom: 3%;" size="extra-small" bindtap="goNew" class="margin" /> -->
   </view>
   <t-fab icon="check" wx:if="{{value!=-1||value1!=-1}}" data-key="showConfirm" style="bottom: 200rpx;right: 5%;" bind:click="handleClick" text="更换单词表" />
-  <t-dialog visible="{{showConfirm}}" content="确定要更换词表吗？" confirm-btn="{{ confirmBtn }}" cancel-btn="取消" bind:confirm="changeBook" bind:cancel="closeDialog" />
-  <!-- <t-radio-group value="{{value}}" bind:change="onChange">
-    <view wx:for="{{userbook}}" wx:key="index" class="card {{value == index ? 'card--active' : ''}}" wx:for-item="item">
-      <t-radio value="{{index}}" label="{{item.name}}" icon="none" borderless disabled="{{selectedBookId==item.id}}" data-id="{{item.id}}" />
-    </view>
-  </t-radio-group> -->
+  <t-dialog visible="{{showConfirm}}" content="确定要更换词表吗？" confirm-btn="确定" cancel-btn="取消" bind:confirm="changeBook" bind:cancel="closeDialog" />
+  <t-dialog visible="{{deleteConfirm}}" content="确定要删除词表吗？" confirm-btn="确定" cancel-btn="取消" bind:confirm="deleteList" bind:cancel="deleteCancel" />
 </view>
