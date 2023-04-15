@@ -48,7 +48,8 @@ Page({
       }
     } else {
       that.setData({
-        count: 0
+        count: 0,
+        loading: 1
       })
       this.getInfo()
     }

@@ -7,21 +7,36 @@ Page({
    * 页面的初始数据
    */
   data: {
+    dictionaryId: 0,
     value: 0,
+    showConfirm: false
   },
   onChange(e) {
     this.setData({
-      value: e.detail.value
+      value: e.detail.value,
+      showConfirm: true
     });
-    console.log(this.data.value)
+  },
+
+  changeDictionary() {
+    let that = this
     wx.request({
       url: 'http://localhost:2346/user/changedic?openid=' + app.globalData.userInfo.id + '&dictionaryId=' + this.data.value,
       success: (res) => {
         app.onLaunch()
+        that.setData({
+          showConfirm: false
+        })
         wx.switchTab({
           url: '/pages/index/index',
         })
       }
+    })
+  },
+
+  closeDialog() {
+    this.setData({
+      showConfirm: false
     })
   },
 
@@ -30,6 +45,7 @@ Page({
    */
   onLoad(options) {
     this.setData({
+      dictionaryId: app.globalData.userInfo.dictionaryId,
       value: app.globalData.userInfo.dictionaryId
     })
   },
