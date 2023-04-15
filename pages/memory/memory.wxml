@@ -1,13 +1,23 @@
 <!--pages/memory/memory.wxml-->
-<view class="container">
-  <form bindsubmit="submit">
-    <t-input label="每天背单词" placeholder="填写个数" suffix="个" align="center" type="number" model:value="{{dailycount}}" value="{{dailycount}}" disabled="{{!show}}" />
-    <t-input label="熟悉单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" model:value="{{familiarday}}" value="{{familiarday}}" disabled="{{!show}}" />
-    <t-input label="模糊单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" model:value="{{blurday}}" value="{{blurday}}" disabled="{{!show}}" />
-    <t-input label="陌生单词" placeholder="填写天数" suffix="天后重复" align="center" type="number" model:value="{{strangeday}}" value="{{strangeday}}" disabled="{{!show}}" />
-    <view style="width: 100%;text-align: center;">
-      <button wx:if="{{show}}" style="background-color: #0052d9;color: white;width: fit-content;margin-top: 5%;" formType="submit">保存</button>
-      <t-button style="margin-top: 5%;" wx:if="{{!show}}" theme="light" size="medium" bindtap="edit">修改</t-button>
+<view>
+  <t-notice-bar visible="{{true}}" content="陌生单词会在当天不断重复直至模糊或熟悉，模糊单词会在第二天复习，熟悉单词会按以下计划进行复习规划">
+    <view slot="prefix-icon">
+      <t-icon name="error-circle-filled"></t-icon>
     </view>
-  </form>
+  </t-notice-bar>
+  <t-steps layout="vertical" theme="dot" current="{{memoryTrace.length}}" style="margin: 5%;width: 90%;">
+    <t-step-item wx:for="{{memoryTrace}}" wx:key="index" title="第{{index+1}}次复习" content="上次复习{{memoryTrace[index]}}天后">
+      <t-icon name="edit" size="22" color="#0052d9" slot="title-right" bindtap="goEdit" data-index="{{index}}" />
+      <t-icon name="delete" size="22" color="#d54941" data-index="{{index}}" slot="title-right" bindtap="goDelete" />
+      <!-- <t-icon name="move" size="22" color="rgba(0, 0, 0, .4)" slot="title-right" /> -->
+    </t-step-item>
+  </t-steps>
+  <t-button style="margin: 5%; display: block" theme="primary" bind:tap="toNext">新增复习计划</t-button>
+  <t-dialog visible="{{showDialog}}" title="第{{current}}次复习距上次复习间隔天数" confirm-btn="确定" cancel-btn="取消" bind:confirm="changeFamiliar" bind:cancel="closeDialog">
+    <t-input class="dialog-input" clearable slot="content" placeholder="输入天数" model:value="{{num}}" />
+  </t-dialog>
+  <t-dialog visible="{{confirmDelete}}" title="确定删除第{{current }}次复习吗？" confirm-btn="确定" cancel-btn="取消" bind:confirm="deleteFamiliar" bind:cancel="cancelDelete" />
+  <t-dialog visible="{{showAdd}}" title="第{{memoryTrace.length+1}}次复习距上次复习间隔天数" confirm-btn="确定" cancel-btn="取消" bind:confirm="addFamiliar" bind:cancel="closeDialog">
+    <t-input class="dialog-input" clearable slot="content" placeholder="输入天数" model:value="{{num}}" />
+  </t-dialog>
 </view>

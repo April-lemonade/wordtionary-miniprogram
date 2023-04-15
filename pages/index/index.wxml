@@ -69,11 +69,12 @@
               <view class="btn favor-btn" data-index="{{index}}" bind:tap="onBlur">模糊</view>
               <view class="btn edit-btn" data-index="{{index}}" bind:tap="onFamiliar">熟悉</view>
             </view>
+            <view style="margin-left:5%;margin-bottom: 5%;" wx:for="{{item.examples}}" wx:for-index="childindex" wx:for-item="item1">
+              <view>{{childindex+1}}. {{item1.text}}</view>
+              <view>{{item1.translations[0].text}}</view>
+            </view>
           </t-swipe-cell>
-          <view style="margin-left:5%;margin-bottom: 5%;" wx:for="{{item.examples}}" wx:for-index="childindex" wx:for-item="item1">
-            <view>{{childindex+1}}. {{item1.text}}</view>
-            <view>{{item1.translations[0].text}}</view>
-          </view>
+
         </view>
       </view>
       <view class="overview" wx:if="{{dictionaryId==1}}">

@@ -1,7 +1,12 @@
 {
   "usingComponents": {
     "t-input": "/miniprogram_npm/tdesign-miniprogram/input/input",
-    "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button"
+    "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
+    "t-steps": "/miniprogram_npm/tdesign-miniprogram/steps/steps",
+    "t-step-item": "/miniprogram_npm/tdesign-miniprogram/step-item/step-item",
+    "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",
+    "t-dialog": "/miniprogram_npm/tdesign-miniprogram/dialog/dialog",
+    "t-notice-bar": "/miniprogram_npm/tdesign-miniprogram/notice-bar/notice-bar"
   },
   "navigationBarTitleText": "记忆设置"
 }
