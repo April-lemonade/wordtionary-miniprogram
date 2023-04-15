@@ -26,7 +26,9 @@ Page({
     userbook: [],
     bookName: '',
     selectedBookId: -1,
-    deleteConfirm: false
+    deleteConfirm: false,
+    showWithInput: false,
+    changeName: ''
   },
 
   /**
@@ -262,9 +264,8 @@ Page({
   },
 
   goEdit() {
-    console.log("???" + this.data.userbook[this.data.value].id)
-    wx.navigateTo({
-      url: '/pages/newList/newList?id=' + this.data.userbook[this.data.value].id,
+    this.setData({
+      showWithInput: true
     })
   },
   deleteCancel() {
@@ -298,6 +299,34 @@ Page({
           deleteConfirm: false
         })
         app.onLaunch()
+        that.onLoad()
+      }
+    })
+  },
+  closeshowWithInput() {
+    this.setData({
+      showWithInput: false
+    })
+  },
+  changName() {
+    console.log(this.data.changeName)
+    let that = this
+    let finalvalue = -1
+    if (this.data.value != -1)
+      finalvalue = this.data.userbook[this.data.value].id
+    else
+      finalvalue = this.data.systembook[this.data.value1].id
+    // console.log("改变词书id为" + finalvalue)
+    this.setData({
+      value1: -1,
+      value: -1
+    })
+    wx.request({
+      url: 'http://localhost:2346/wordlist/changelistname?bookid=' + finalvalue + '&name=' + this.data.changeName,
+      success: (res) => {
+        that.setData({
+          showWithInput: false
+        })
         that.onLoad()
       }
     })
