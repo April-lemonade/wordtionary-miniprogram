@@ -28,7 +28,11 @@ Page({
     selectedBookId: -1,
     deleteConfirm: false,
     showWithInput: false,
-    changeName: ''
+    changeName: '',
+    dailyCount: 0,
+    progress: '',
+    finishDate: '',
+    progress:0
   },
 
   /**
@@ -38,7 +42,8 @@ Page({
     let that = this
     if (app.globalData.userInfo.bookId != 0) {
       that.setData({
-        selectedBookId: app.globalData.userInfo.bookId
+        selectedBookId: app.globalData.userInfo.bookId,
+        dailyCount: app.globalData.userInfo.dailyCount
       })
       wx.request({
         url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
@@ -46,6 +51,18 @@ Page({
           console.log(res)
           that.setData({
             bookName: res.data
+          })
+        }
+      })
+      wx.request({
+        url: 'http://localhost:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
+        success: (res) => {
+          console.log(res)
+          
+          that.setData({
+            progress: res.data.progress,
+            finishDate: res.data.finishDate,
+            progress: parseFloat(res.data.progress)
           })
         }
       })

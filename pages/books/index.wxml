@@ -5,10 +5,10 @@
       <view>当前单词表：</view>
       <view class="boldfont">{{bookName}}</view>
     </view>
-    <!-- <view class="dailytask">
+    <view class="dailytask">
       <view style="margin-right: 3%;">每日学习单词数量：</view>
       <view wx:if="{{!countChange}}" style="display: flex;flex-direction: row;">
-        <view class="boldfont">3</view>
+        <view class="boldfont">{{dailyCount}}</view>
         <t-icon bindtap="countEdit" size="20px" name="edit-1" />
       </view>
       <view wx:if="{{countChange}}" style="display: flex;flex-direction: row;">
@@ -17,11 +17,11 @@
         <t-icon style="margin-left: 5%;" color="#0052d9" size="20px" bindtap="countEdit" name="close-circle-filled" />
       </view>
     </view>
-    <t-progress theme="plump" percentage="80" />
+    <t-progress theme="plump" percentage="{{progress*100}}" />
     <view class="predict">
       <view>剩余单词数量：2347</view>
-      <view>预计完成时间：2023.5.1</view>
-    </view> -->
+      <view>预计完成时间：{{finishDate}}</view>
+    </view>
   </view>
   <t-divider />
   <view class="changeList">
