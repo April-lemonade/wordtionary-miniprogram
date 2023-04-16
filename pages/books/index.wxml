@@ -19,7 +19,7 @@
     </view>
     <t-progress theme="plump" percentage="{{progress*100}}" />
     <view class="predict">
-      <view>剩余单词数量：2347</view>
+      <view>剩余单词数量：{{leftCount}}</view>
       <view>预计完成时间：{{finishDate}}</view>
     </view>
   </view>

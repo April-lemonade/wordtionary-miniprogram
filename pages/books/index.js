@@ -33,13 +33,112 @@ Page({
     progress: '',
     finishDate: '',
     progress: 0,
-    num: 0
+    num: 0,
+    leftCount:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    let that = this
+    that.setData({
+      selectedBookId: app.globalData.userInfo.bookId,
+      dailyCount: app.globalData.userInfo.dailyCount,
+      num: app.globalData.userInfo.dailyCount,
+    })
+    if (app.globalData.userInfo.bookId != 0) {
+      that.setData({
+        selectedBookId: app.globalData.userInfo.bookId,
+        dailyCount: app.globalData.userInfo.dailyCount,
+        num: app.globalData.userInfo.dailyCount,
+      })
+      wx.request({
+        url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
+        success: (res) => {
+          console.log("重新获取名称")
+          console.log(res)
+          that.setData({
+            bookName: res.data
+          })
+        }
+      })
+      wx.request({
+        url: 'http://localhost:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
+        success: (res) => {
+          console.log(res)
+          that.setData({
+            progress: res.data.progress,
+            finishDate: res.data.finishDate,
+            progress: parseFloat(res.data.progress),
+            leftCount:res.data.leftCount
+          })
+        }
+      })
+    }
+    if (!app.globalData.userInfo) {
+      app.userInfoReadyCallback = res => {
+        // console.log(app.globalData.userInfo.bookId + "huu")
+        if (app.globalData.userInfo.bookId != 0) {
+          that.setData({
+            selectedBookId: app.globalData.userInfo.bookId
+          })
+        }
+      }
+    }
+    wx.request({
+      url: 'http://localhost:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          userbook: res.data,
+          loading: 0
+        })
+      }
+    })
+    wx.request({
+      url: 'http://localhost:2346/wordlist/getadmin',
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          systembook: res.data,
+          loading1: 0
+        })
+      }
+    })
+  },
+
+  changeDailyCount() {
+    console.log(this.data.num)
+    let that = this
+    // that.setData({
+    //   countChange: false,
+    //   dailyCount: that.data.num
+    // })
+    wx.request({
+      url: 'http://localhost:2346/user/changedailycount?openid=' + app.globalData.userInfo.id + '&dailyCount=' + this.data.num,
+      success: (res) => {
+        app.globalData.userInfo.dailyCount = that.data.num
+        console.log(res)
+        app.onLaunch()
+        that.onLoad()
+        wx.switchTab({
+          url: '/pages/index/index',
+        })
+        that.setData({
+          dailyCount: that.data.num,
+          countChange: false
+        })
+
+      }
+    })
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
     let that = this
     that.setData({
       selectedBookId: app.globalData.userInfo.bookId,
@@ -105,54 +204,81 @@ Page({
     })
   },
 
-  changeDailyCount() {
-    console.log(this.data.num)
-    let that = this
-    that.setData({
-      countChange: false,
-      dailyCount: that.data.num
-    })
-    wx.request({
-      url: 'http://localhost:2346/user/changedailycount?openid=' + app.globalData.userInfo.id + '&dailyCount=' + this.data.num,
-      success: (res) => {
-        console.log(res)
-        that.setData({
-          countChange: false,
-          dailyCount: that.data.num
-        })
-        app.onLaunch()
-        that.onLoad()
-      }
-    })
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    console.log("shuaxin")
+    // this.onLoad()
+    
     this.setData({
-      selectedBookId: app.globalData.bookId
+      selectedBookId: app.globalData.bookId,
+      dailyCount: app.globalData.userInfo.dailyCount
     })
     let that = this
     if (app.globalData.userInfo.bookId != 0) {
       that.setData({
         selectedBookId: app.globalData.userInfo.bookId
       })
+      // let that = this
+      that.setData({
+        selectedBookId: app.globalData.userInfo.bookId,
+        dailyCount: app.globalData.userInfo.dailyCount,
+        num: app.globalData.userInfo.dailyCount,
+      })
+      if (app.globalData.userInfo.bookId != 0) {
+        that.setData({
+          selectedBookId: app.globalData.userInfo.bookId,
+          dailyCount: app.globalData.userInfo.dailyCount,
+          num: app.globalData.userInfo.dailyCount,
+        })
+        wx.request({
+          url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
+          success: (res) => {
+            console.log("重新获取名称")
+            that.setData({
+              bookName: res.data
+            })
+          }
+        })
+        wx.request({
+          url: 'http://localhost:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
+          success: (res) => {
+            console.log(res)
+            that.setData({
+              progress: res.data.progress,
+              finishDate: res.data.finishDate,
+              progress: parseFloat(res.data.progress)
+            })
+          }
+        })
+      }
+      if (!app.globalData.userInfo) {
+        app.userInfoReadyCallback = res => {
+          // console.log(app.globalData.userInfo.bookId + "huu")
+          if (app.globalData.userInfo.bookId != 0) {
+            that.setData({
+              selectedBookId: app.globalData.userInfo.bookId
+            })
+          }
+        }
+      }
       wx.request({
-        url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
+        url: 'http://localhost:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
         success: (res) => {
           console.log(res)
           that.setData({
-            bookName: res.data
+            userbook: res.data,
+            loading: 0
+          })
+        }
+      })
+      wx.request({
+        url: 'http://localhost:2346/wordlist/getadmin',
+        success: (res) => {
+          console.log(res)
+          that.setData({
+            systembook: res.data,
+            loading1: 0
           })
         }
       })
@@ -207,7 +333,9 @@ Page({
     })
     console.log(data)
   },
+
   onShow: function () {
+    // this.onLoad()
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
@@ -265,38 +393,66 @@ Page({
       url: 'http://localhost:2346/wordlist/change?bookId=' + finalvalue + '&openid=' + app.globalData.openid,
       success: (res) => {
         console.log(res)
+        app.globalData.userInfo.bookId = finalvalue
+        that.onLoad()
         wx.request({
-          url: 'http://localhost:2346/word/getwords?bookId=' + finalvalue + "&wordId=" + app.globalData.wordId,
+          url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
           success: (res) => {
             console.log(res)
-            app.globalData.wordList = res.data
             that.setData({
-              selectedBookId: finalvalue
+              bookName: res.data
             })
-            wx.request({
-              url: 'http://localhost:2346/wordlist/getname?bookId=' + finalvalue,
-              success: (res) => {
-                console.log(res)
-                that.setData({
-                  bookName: res.data
-                })
-              }
-            })
-            // app.globalData.userInfo.bookId = finalvalue
-            // app.globalData.userInfo
-            that.closeDialog()
-            that.onShow()
-            wx.switchTab({
-              url: '/pages/index/index',
-              success: function (e) {
-                var page = getCurrentPages().pop();
-                if (page == undefined || page == null) return;
-                page.onLoad();
-              }
-            })
-            app.onLaunch()
           }
         })
+        wx.request({
+          url: 'http://localhost:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
+          success: (res) => {
+            console.log(res)
+            that.setData({
+              progress: res.data.progress,
+              finishDate: res.data.finishDate,
+              progress: parseFloat(res.data.progress)
+            })
+          }
+        })
+        app.onLaunch()
+        // that.onLoad()
+        // wx.switchTab({
+        //   url: '/pages/index/index',
+        // })
+        that.closeDialog()
+        // wx.request({
+        //   url: 'http://localhost:2346/word/getwords?bookId=' + finalvalue + "&wordId=" + app.globalData.wordId,
+        //   success: (res) => {
+        //     console.log(res)
+        //     app.globalData.wordList = res.data
+        //     that.setData({
+        //       selectedBookId: finalvalue
+        //     })
+        //     wx.request({
+        //       url: 'http://localhost:2346/wordlist/getname?bookId=' + finalvalue,
+        //       success: (res) => {
+        //         console.log(res)
+        //         that.setData({
+        //           bookName: res.data
+        //         })
+        //       }
+        //     })
+        //     // app.globalData.userInfo.bookId = finalvalue
+        //     // app.globalData.userInfo
+        //     that.closeDialog()
+        //     that.onShow()
+        //     wx.switchTab({
+        //       url: '/pages/index/index',
+        //       success: function (e) {
+        //         var page = getCurrentPages().pop();
+        //         if (page == undefined || page == null) return;
+        //         page.onLoad();
+        //       }
+        //     })
+        //     app.onLaunch()
+        //   }
+        // })
       }
     })
   },

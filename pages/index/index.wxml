@@ -102,9 +102,9 @@
         <t-button theme="primary" size="small" disabled="{{disabled}}" bindtap="next">下一个</t-button>
       </view>
     </view>
-    <view wx:if="{{finish==1&&finish==1}}">
+    <view wx:if="{{finish==1}}">
       <image src="/assets/unlogin.png" style="width: 100%;margin-top: 10%;" />
-      <view>已经背完这本啦，真了不起！</view>
+      <view>完成今天的学习任务啦，真了不起！</view>
     </view>
   </view>
 </view>

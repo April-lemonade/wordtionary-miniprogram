@@ -59,7 +59,7 @@ Page({
   getInfo() {
     let that = this
     wx.request({
-      url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId + '&dictionaryId=' + app.globalData.userInfo.dictionaryId,
+      url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId + '&dictionaryId=' + app.globalData.userInfo.dictionaryId + '&openid=' + app.globalData.userInfo.id,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -68,6 +68,7 @@ Page({
         })
         if (res.data.length != 0) {
           app.globalData.wordList = res.data
+          app.globalData.allCount = res.data.length
           var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
           var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
           if (app.globalData.userInfo.dictionaryId == 0) {
@@ -104,10 +105,71 @@ Page({
           })
           console.log(this.data.translation1)
         } else {
-          that.setData({
-            finish: 1,
-            loading: 0
+          console.log("直接开始重学")
+          wx.request({
+            url: 'http://localhost:2346/word/getrelearn?openid=' + app.globalData.userInfo.id,
+            success: (res) => {
+              app.globalData.wordList = res.data
+              console.log(res)
+              if (res.data.length != 0) {
+                var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+                var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+                if (app.globalData.userInfo.dictionaryId == 0) {
+                  for (let i = 0; i < array.length; i++) {
+                    array1[i] = ''
+                    array[i] = -2
+                  }
+                  that.setData({
+                    familiar: array,
+                    class: array1,
+                    wordList: res.data
+                  })
+                }
+                if (app.globalData.userInfo.dictionaryId == 1) {
+                  var camarray = new Array(JSON.parse(res.data[0].cambridgeTranslations).length);
+                  var camarray1 = new Array(JSON.parse(res.data[0].cambridgeTranslations).length);
+                  for (let i = 0; i < camarray.length; i++) {
+                    camarray1[i] = ''
+                    camarray[i] = -2
+                  }
+                  that.setData({
+                    familiar: camarray,
+                    class: camarray1,
+                    wordList: res.data,
+                  })
+                }
+                that.setData({
+                  wordList: res.data,
+                  word: res.data[that.data.count],
+                  translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
+                  translation1: JSON.parse(res.data[that.data.count].cambridgeTranslations),
+                  loading: 0,
+                  finish: 0,
+                  bookId: app.globalData.userInfo.bookId,
+                  dictionaryId: app.globalData.userInfo.dictionaryId
+                })
+              } else {
+                that.setData({
+                  finish: 1,
+                  loading: 0
+                })
+              }
+            }
           })
+          that.setData({
+            count: 0
+          })
+          // that.onLoad()
+          // console.log("refresh")
+        }
+        if (this.data.wordList == null) {
+          that.setData({
+            finish: 1
+          })
+          // that.setData({
+          //   finish: 1,
+          //   loading: 0
+          // })
         }
       }
     })
@@ -174,12 +236,7 @@ Page({
       })
     }
   },
-  // onKill() {
-  //   wx.showToast({
-  //     title: '你点击了删除',
-  //     icon: 'none'
-  //   });
-  // },
+
   onStrange(e) {
     console.log(this.data.familiar)
     var arry = this.data.familiar
@@ -218,27 +275,78 @@ Page({
     }
   },
   next() {
-    console.log(this.data.word)
+    console.log(this.data.count)
     var array1 = []
     let that = this
     let arr = this.data.familiar
     arr.sort()
+    if (arr[0] == -1) {
+      app.globalData.allCount = app.globalData.allCount - 1
+    }
     wx.request({
-      url: 'http://localhost:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0],
+      url: 'http://localhost:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0] + '&listId=' + app.globalData.userInfo.bookId,
       success: (res) => {
         console.log(res)
         that.setData({
           count: that.data.count + 1,
           disabled: true
         })
-        if (that.data.count == 10) {
+        if (that.data.count == app.globalData.wordList.length) {
+          wx.request({
+            url: 'http://localhost:2346/word/getrelearn?openid=' + app.globalData.userInfo.id,
+            success: (res) => {
+              app.globalData.wordList = res.data
+              if (res.data.length != 0) {
+                var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+                var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
+                if (app.globalData.userInfo.dictionaryId == 0) {
+                  for (let i = 0; i < array.length; i++) {
+                    array1[i] = ''
+                    array[i] = -2
+                  }
+                  that.setData({
+                    familiar: array,
+                    class: array1,
+                    wordList: res.data
+                  })
+                }
+                if (app.globalData.userInfo.dictionaryId == 1) {
+                  var camarray = new Array(JSON.parse(res.data[0].cambridgeTranslations).length);
+                  var camarray1 = new Array(JSON.parse(res.data[0].cambridgeTranslations).length);
+                  for (let i = 0; i < camarray.length; i++) {
+                    camarray1[i] = ''
+                    camarray[i] = -2
+                  }
+                  that.setData({
+                    familiar: camarray,
+                    class: camarray1,
+                    wordList: res.data
+                  })
+                }
+                that.setData({
+                  wordList: res.data,
+                  word: res.data[that.data.count],
+                  translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
+                  translation1: JSON.parse(res.data[that.data.count].cambridgeTranslations),
+                  loading: 0,
+                  finish: 0,
+                  bookId: app.globalData.userInfo.bookId,
+                  dictionaryId: app.globalData.userInfo.dictionaryId
+                })
+              } else {
+                that.setData({
+                  finish: 1
+                })
+              }
+            }
+          })
           that.setData({
             count: 0
           })
-          that.onLoad()
-          console.log("refresh")
+          // that.onLoad()
+          // console.log("refresh")
         }
-        if (this.data.wordList.length < 10 && this.data.count == this.data.wordList.length) {
+        if (this.data.wordList == null) {
           that.setData({
             finish: 1
           })

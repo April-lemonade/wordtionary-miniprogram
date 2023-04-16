@@ -24,8 +24,8 @@ App({
             success(res) {
               console.log(res)
               that.globalData.openid = res.data.id,
-              that.globalData.wordId = res.data.wordId,
-              that.globalData.bookId = res.data.bookId
+                that.globalData.wordId = res.data.wordId,
+                that.globalData.bookId = res.data.bookId
               that.globalData.userInfo = res.data
               if (that.userInfoReadyCallback) {
                 that.userInfoReadyCallback(res)
@@ -40,9 +40,10 @@ App({
   },
   globalData: {
     userInfo: null,
-    bookId:0,
-    wordId:0,
-    openid:'',
-    wordList: []
+    bookId: 0,
+    wordId: 0,
+    openid: '',
+    wordList: [],
+    allCount: 0
   }
 })
