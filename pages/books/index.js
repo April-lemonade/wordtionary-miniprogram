@@ -32,7 +32,8 @@ Page({
     dailyCount: 0,
     progress: '',
     finishDate: '',
-    progress:0
+    progress: 0,
+    num: 0
   },
 
   /**
@@ -40,10 +41,16 @@ Page({
    */
   onLoad(options) {
     let that = this
+    that.setData({
+      selectedBookId: app.globalData.userInfo.bookId,
+      dailyCount: app.globalData.userInfo.dailyCount,
+      num: app.globalData.userInfo.dailyCount,
+    })
     if (app.globalData.userInfo.bookId != 0) {
       that.setData({
         selectedBookId: app.globalData.userInfo.bookId,
-        dailyCount: app.globalData.userInfo.dailyCount
+        dailyCount: app.globalData.userInfo.dailyCount,
+        num: app.globalData.userInfo.dailyCount,
       })
       wx.request({
         url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
@@ -58,7 +65,6 @@ Page({
         url: 'http://localhost:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
         success: (res) => {
           console.log(res)
-          
           that.setData({
             progress: res.data.progress,
             finishDate: res.data.finishDate,
@@ -95,6 +101,27 @@ Page({
           systembook: res.data,
           loading1: 0
         })
+      }
+    })
+  },
+
+  changeDailyCount() {
+    console.log(this.data.num)
+    let that = this
+    that.setData({
+      countChange: false,
+      dailyCount: that.data.num
+    })
+    wx.request({
+      url: 'http://localhost:2346/user/changedailycount?openid=' + app.globalData.userInfo.id + '&dailyCount=' + this.data.num,
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          countChange: false,
+          dailyCount: that.data.num
+        })
+        app.onLaunch()
+        that.onLoad()
       }
     })
 

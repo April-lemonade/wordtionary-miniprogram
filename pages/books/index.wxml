@@ -12,8 +12,8 @@
         <t-icon bindtap="countEdit" size="20px" name="edit-1" />
       </view>
       <view wx:if="{{countChange}}" style="display: flex;flex-direction: row;">
-        <t-stepper defaultValue="3" min="0" theme="filled" />
-        <t-icon style="margin-left: 5%;" color="#0052d9" size="20px" bindtap="countEdit" name="check-circle-filled" />
+        <t-input value="{{dailyCount}}" style="height: 1px;width: 40px;" min="0" theme="filled" model:value="{{num}}" />
+        <t-icon style="margin-left: 5%;" color="#0052d9" size="20px" bindtap="changeDailyCount" name="check-circle-filled" />
         <t-icon style="margin-left: 5%;" color="#0052d9" size="20px" bindtap="countEdit" name="close-circle-filled" />
       </view>
     </view>
