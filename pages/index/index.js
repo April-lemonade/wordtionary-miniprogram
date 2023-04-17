@@ -36,7 +36,8 @@ Page({
     wordList: [],
     count: 0,
     finish: 0,
-    dictionaryId: 1
+    dictionaryId: 1,
+    searchValue: ''
   },
   onLoad() {
     let that = this
@@ -363,6 +364,13 @@ Page({
           app.globalData.userInfo.wordId = that.data.word.id
         }
       }
+    })
+  },
+
+  goSearch() {
+    console.log(this.data.searchValue)
+    wx.navigateTo({
+      url: '/pages/search/search?searchValue=' + this.data.searchValue,
     })
   }
 })

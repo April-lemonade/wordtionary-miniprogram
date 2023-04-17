@@ -11,7 +11,7 @@
 <t-tab-bar value="{{value}}" bindchange="onChange" shape="round" theme="tag" split="{{false}}">
   <t-tab-bar-item
     wx:if="{{index==0}}"
-    badge-props="{{ {count: 16} }}"
+    badge-props="{{allCount}}"
     wx:for="{{list}}"
     wx:key="index"
     value="{{item.value}}"

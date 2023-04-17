@@ -1,0 +1,42 @@
+/* pages/search/search.wxss */
+.container {
+  width: 90%;
+  margin: 5%;
+}
+
+.word {
+  text-align: center;
+  font-size: 40px;
+  margin: 5%;
+  font-weight: bold;
+  color: #0052d9;
+}
+
+.soundmark {
+  margin-left: 5%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* font-size: 15px; */
+  color: #aaa;
+}
+
+.bri_soundmark {
+  width: 50%;
+}
+
+.uni_soundmark {
+  width: 50%;
+}
+
+.overview {
+  width: 90%;
+  margin: 5%;
+}
+
+.definition{
+  margin: 5%;
+  color: #0052d9;
+  font-weight: bold;
+}

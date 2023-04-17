@@ -44,6 +44,6 @@ App({
     wordId: 0,
     openid: '',
     wordList: [],
-    allCount: 0
+    allCount: 3
   }
 })

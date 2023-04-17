@@ -7,7 +7,8 @@
     "pages/me/index",
     "pages/books/index",
     "pages/account/account",
-    "pages/dictionary/dictionary"
+    "pages/dictionary/dictionary",
+    "pages/search/search"
   ],
   "window": {
     "backgroundTextStyle": "light",

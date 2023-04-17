@@ -1,0 +1,35 @@
+<view class="container">
+  <view wx:if="{{loading==1}}" style="width: 100%;display: flex;justify-content: center;">
+    <t-loading theme="dots" size="80rpx" class="wrapper" />
+  </view>
+  <view wx:if="{{loading==0}}">
+    <view class="word">
+      <p>{{searchValue}}</p>
+    </view>
+    <view class="soundmark">
+      <view class="bri_soundmark">
+        <text>英：</text>
+        <text style="color: #0052d9;text-decoration:underline" bindtap="playbrisound">[{{translation.pronunciations[0].phoneticSpelling}}]</text>
+      </view>
+      <view class="uni_soundmark">
+        <text>美：</text>
+        <text style="color: #0052d9;text-decoration:underline" bindtap="playunisound">[{{translation.pronunciations[1].phoneticSpelling}}]</text>
+      </view>
+    </view>
+    <view class="overview" wx:if="{{dictionaryId==0}}">
+      <view wx:for="{{translation.senses}}" wx:key="index" wx:for-item="item">
+        <view class="definition">{{item.notes[item.notes.length-1].text}} {{item.translations[0].text}}</view>
+        <view style="margin-left:5%;margin-bottom: 5%;" wx:for="{{item.examples}}" wx:for-index="childindex" wx:for-item="item1">
+          <view>{{childindex+1}}. {{item1.text}}</view>
+          <view>{{item1.translations[0].text}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="overview" wx:if="{{dictionaryId==1}}">
+      <view wx:for="{{translation1}}" wx:key="index" wx:for-item="item">
+        <view>{{item.definition}}</view>
+        <rich-text nodes="{{item.examples}}"></rich-text>
+      </view>
+    </view>
+  </view>
+</view>

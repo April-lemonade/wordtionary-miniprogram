@@ -31,6 +31,8 @@
 //     }
 //   }
 // })
+const app = getApp()
+
 Component({
   data: {
     value: 'label_1',
@@ -39,7 +41,7 @@ Component({
         icon: 'root-list',
         ariaLabel: '首页',
         label: '背单词'
-      },{
+      }, {
         value: '/pages/books/index',
         icon: 'layers',
         ariaLabel: '单词表',
@@ -49,11 +51,28 @@ Component({
         value: '/pages/me/index',
         icon: 'chart',
         ariaLabel: '软件',
-        label:'统计'
+        label: '统计'
       },
     ],
+    allCount: 1
   },
+  lifetimes: {
+    created: function () {
+      this.setData({
+        allCount: 6
+      })
+    },
 
+    attached: function () {
+      // 在组件实例进入页面节点树时执行
+      this.setData({
+        allCount: 6
+      })
+    },
+    detached: function () {
+      // 在组件实例被从页面节点树移除时执行
+    },
+  },
   methods: {
     onChange(e) {
       const data = e.currentTarget.dataset

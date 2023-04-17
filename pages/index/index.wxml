@@ -29,7 +29,7 @@
 </view> -->
 <view class="container">
   <view class="example-search">
-    <t-search model:value="{{value}}" placeholder="" />
+    <t-search model:value="{{searchValue}}" placeholder="" bind:submit="goSearch" />
   </view>
   <view class="userinfo">
     <block wx:if="{{loading==1}}">
