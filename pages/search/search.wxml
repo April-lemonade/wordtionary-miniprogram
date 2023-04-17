@@ -4,7 +4,8 @@
   </view>
   <view wx:if="{{loading==0}}">
     <view class="word">
-      <p>{{searchValue}}</p>
+      <p style="width: 90%;">{{searchValue}}</p>
+      <t-icon style="width: 10%;height:40px;line-height: 40px;align-items: center;display: flex;" name="queue" size="48rpx" bind:click="showDescAction" />
     </view>
     <view class="soundmark">
       <view class="bri_soundmark">
@@ -32,4 +33,6 @@
       </view>
     </view>
   </view>
+  <t-action-sheet id="t-action-sheet" bind:selected="handleSelected" />
+
 </view>

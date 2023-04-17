@@ -1,5 +1,9 @@
 // pages/search/search.js
 const app = getApp()
+import ActionSheet, {
+  ActionSheetTheme
+} from 'tdesign-miniprogram/action-sheet/index';
+
 Page({
 
   /**
@@ -8,7 +12,8 @@ Page({
   data: {
     searchValue: '',
     dictionaryId: 0,
-    loading: 1
+    loading: 1,
+    userbook: []
   },
 
   /**
@@ -28,6 +33,15 @@ Page({
           translation: JSON.parse(res.data.oxfordTranslations),
           translation1: JSON.parse(res.data.cambridgeTranslations),
           loading: 0
+        })
+        wx.request({
+          url: 'http://localhost:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
+          success: (res) => {
+            console.log(res)
+            that.setData({
+              userbook: res.data,
+            })
+          }
         })
       }
     })
@@ -80,5 +94,32 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+  showDescAction() {
+    let data = []
+    for (let i = 0; i < this.data.userbook.length; i++) {
+      let temp = {
+        index: this.data.userbook[i].id,
+        label: this.data.userbook[i].name
+      }
+      data.push(temp)
+    }
+    console.log(data)
+    ActionSheet.show({
+      theme: ActionSheetTheme.List,
+      selector: '#t-action-sheet',
+      context: this,
+      description: '添加到单词表',
+      items: data
+    });
+  },
+  handleSelected(e) {
+    console.log(e.detail);
+    wx.request({
+      url: 'http://localhost:2346/word/addword?word=' + this.data.searchValue + '&listid=' + e.detail.selected.index,
+      success: (res) => {
+        console.log(res)
+      }
+    })
   }
 })
