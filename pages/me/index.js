@@ -1,6 +1,64 @@
 // logs.js
 import * as echarts from '../../ec-canvas/echarts';
 
+function initChart1(canvas, width, height, dpr) {
+  const chart = echarts.init(canvas, null, {
+    width: width,
+    height: height,
+    devicePixelRatio: dpr // new
+  });
+  canvas.setChart(chart);
+  var option = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow' 
+      }
+    },
+    legend: {},
+    grid: {
+      right: '10%',
+      bottom: '3%',
+      containLabel: true
+    },
+    yAxis: {
+      type: 'value'
+    },
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    series: [
+      {
+        name: '新学单词',
+        type: 'bar',
+        stack: 'total',
+        label: {
+          show: true
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [320, 302, 301, 334, 390, 330, 320]
+      },
+      {
+        name: '复习单词',
+        type: 'bar',
+        stack: 'total',
+        label: {
+          show: true
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [820, 832, 901, 934, 1290, 1330, 1320]
+      }
+    ]
+  };
+  chart.setOption(option);
+  return chart;
+}
+
 function initChart(canvas, width, height, dpr) {
   const chart = echarts.init(canvas, null, {
     width: width,
@@ -119,8 +177,12 @@ Page({
     ec: {
       onInit: initChart
     },
+    ec1: {
+      onInit: initChart1
+    },
     yearMonth: '',
-    data: []
+    data: [],
+    currentTab: 0
   },
   onLoad() {
     let date = new Date()
@@ -195,6 +257,12 @@ Page({
   onIconTap() {
     wx.navigateTo({
       url: '/pages/setting/setting',
+    })
+  },
+  onTabsClick(e) {
+    // console.log(e.detail)
+    this.setData({
+      currentTab: e.detail.value
     })
   }
 })
