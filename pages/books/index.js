@@ -416,43 +416,7 @@ Page({
           }
         })
         app.onLaunch()
-        // that.onLoad()
-        // wx.switchTab({
-        //   url: '/pages/index/index',
-        // })
         that.closeDialog()
-        // wx.request({
-        //   url: 'http://localhost:2346/word/getwords?bookId=' + finalvalue + "&wordId=" + app.globalData.wordId,
-        //   success: (res) => {
-        //     console.log(res)
-        //     app.globalData.wordList = res.data
-        //     that.setData({
-        //       selectedBookId: finalvalue
-        //     })
-        //     wx.request({
-        //       url: 'http://localhost:2346/wordlist/getname?bookId=' + finalvalue,
-        //       success: (res) => {
-        //         console.log(res)
-        //         that.setData({
-        //           bookName: res.data
-        //         })
-        //       }
-        //     })
-        //     // app.globalData.userInfo.bookId = finalvalue
-        //     // app.globalData.userInfo
-        //     that.closeDialog()
-        //     that.onShow()
-        //     wx.switchTab({
-        //       url: '/pages/index/index',
-        //       success: function (e) {
-        //         var page = getCurrentPages().pop();
-        //         if (page == undefined || page == null) return;
-        //         page.onLoad();
-        //       }
-        //     })
-        //     app.onLaunch()
-        //   }
-        // })
       }
     })
   },

@@ -4,7 +4,6 @@ const app = getApp()
 
 Page({
   data: {
-    animationType: "animated bounceInUp",
     right: [{
       text: '删除',
       className: 'btn delete-btn',
@@ -39,7 +38,44 @@ Page({
     dictionaryId: 1,
     searchValue: '',
     allCount: 0,
-    showCount: 1
+    showCount: 1,
+    note: '',
+    newNote: '',
+    showWithInput: false,
+    noteEditStyle: 'height:200rpx'
+  },
+  editNote() {
+    console.log(this.data.newNote)
+    let that = this
+    wx.request({
+      url: 'http://localhost:2346/note/addnote',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      data: {
+        openid: app.globalData.userInfo.id,
+        WordId: that.data.word.id,
+        content: that.data.newNote
+      },
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          showWithInput: false,
+          note: that.data.newNote
+        })
+      }
+    })
+  },
+  closeDialog() {
+    this.setData({
+      showWithInput: false
+    })
+  },
+  goEdit() {
+    this.setData({
+      showWithInput: true
+    })
   },
   onLoad() {
     let that = this
@@ -72,7 +108,7 @@ Page({
         if (res.data.length != 0) {
           app.globalData.wordList = res.data
           app.globalData.allCount = res.data.length
-          console.log(app.globalData.allCount)
+          // console.log(app.globalData.allCount)
           var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
           var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
           if (app.globalData.dictionaryId == 0) {
@@ -108,7 +144,8 @@ Page({
             bookId: app.globalData.bookId,
             dictionaryId: app.globalData.dictionaryId
           })
-          console.log(this.data.translation1)
+          console.log(that.data.word)
+          that.getNote(that.data.word.id)
         } else {
           console.log("直接开始重学")
           wx.request({
@@ -153,6 +190,8 @@ Page({
                   bookId: app.globalData.userInfo.bookId,
                   dictionaryId: app.globalData.userInfo.dictionaryId
                 })
+                console.log(that.data.word)
+                that.getNote(that.data.word.id)
               } else {
                 that.setData({
                   finish: 1,
@@ -164,17 +203,13 @@ Page({
           that.setData({
             count: 0
           })
-          // that.onLoad()
-          // console.log("refresh")
         }
+
+
         if (this.data.wordList == null) {
           that.setData({
             finish: 1
           })
-          // that.setData({
-          //   finish: 1,
-          //   loading: 0
-          // })
         }
       }
     })
@@ -340,6 +375,7 @@ Page({
                   bookId: app.globalData.userInfo.bookId,
                   dictionaryId: app.globalData.userInfo.dictionaryId
                 })
+                that.getNote(that.data.word.id)
               } else {
                 that.setData({
                   finish: 1
@@ -377,6 +413,20 @@ Page({
     console.log(this.data.searchValue)
     wx.navigateTo({
       url: '/pages/search/search?searchValue=' + this.data.searchValue,
+    })
+  },
+
+  getNote(id) {
+    let that = this
+    wx.request({
+      url: 'http://localhost:2346/note/getnote?openid=' + app.globalData.userInfo.id + '&wordId=' + id,
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          note: res.data[0].content,
+          newNote: res.data[0].content
+        })
+      }
     })
   }
 })

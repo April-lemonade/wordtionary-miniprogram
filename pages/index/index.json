@@ -7,7 +7,10 @@
     "t-swipe-cell": "/miniprogram_npm/tdesign-miniprogram/swipe-cell/swipe-cell",
     "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell",
     "t-toast": "/miniprogram_npm/tdesign-miniprogram/toast/toast",
-    "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image"
+    "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image",
+    "t-divider": "/miniprogram_npm/tdesign-miniprogram/divider/divider",
+    "t-input": "/miniprogram_npm/tdesign-miniprogram/input/input",
+    "t-textarea": "/miniprogram_npm/tdesign-miniprogram/textarea/textarea"
   },
   "navigationBarTitleText": "背单词"
 }

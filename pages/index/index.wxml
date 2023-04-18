@@ -44,8 +44,8 @@
       <view>请先选择一本词书</view>
     </block>
     <view wx:if="{{loading==0&&bookId!=0&&finish==0}}" class="card">
-      <view style="display: flex;margin: 5%;flex-direction: column;">
-        <view>{{showCount}}/{{allCount}}</view>
+      <view>{{showCount}}/{{allCount}}</view>
+      <view style="display: flex;margin: 5%;flex-direction: column;align-items: center;">
         <p class="word">{{word.word}}</p>
       </view>
       <view class="soundmark">
@@ -58,6 +58,13 @@
           <text style="color: #0052d9;text-decoration:underline" bindtap="playunisound">[{{translation.pronunciations[1].phoneticSpelling}}]</text>
         </view>
       </view>
+      <t-divider content="单词笔记" t-class-content="divider" />
+      <t-icon name="edit" size="40rpx" bind:click="goEdit" />
+      <view style="width: 100%;text-align: center;margin-top: 2%;">{{note}}</view>
+      <t-dialog visible="{{showWithInput}}" title="编辑笔记" confirm-btn="确定" cancel-btn="取消" bind:confirm="editNote" bind:cancel="closeDialog">
+        <t-textarea bordered t-class="external-class" placeholder="请输入文字" disableDefaultPadding="{{false}}" model:value="{{newNote}}"  slot="content" style="{{noteEditStyle}}" />
+      </t-dialog>
+      <t-divider content="单词释义" t-class-content="divider" />
       <view class="overview" wx:if="{{dictionaryId==0}}">
         <view wx:for="{{translation.senses}}" wx:key="index" wx:for-item="item">
           <t-swipe-cell>
