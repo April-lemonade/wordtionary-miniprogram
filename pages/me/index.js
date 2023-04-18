@@ -2,17 +2,21 @@
 import * as echarts from '../../ec-canvas/echarts';
 
 function initChart1(canvas, width, height, dpr) {
+  const app = getApp()
   const chart = echarts.init(canvas, null, {
     width: width,
     height: height,
     devicePixelRatio: dpr // new
   });
   canvas.setChart(chart);
+  const predict = getCurrentPages()[getCurrentPages().length - 1].data.predict
+  const dateArray = getCurrentPages()[getCurrentPages().length - 1].data.dateArray
+  const dailyCount = app.globalData.userInfo.dailyCount
   var option = {
     tooltip: {
       trigger: 'axis',
       axisPointer: {
-        type: 'shadow' 
+        type: 'shadow'
       }
     },
     legend: {},
@@ -26,10 +30,9 @@ function initChart1(canvas, width, height, dpr) {
     },
     xAxis: {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      data: dateArray
     },
-    series: [
-      {
+    series: [{
         name: '新学单词',
         type: 'bar',
         stack: 'total',
@@ -39,7 +42,7 @@ function initChart1(canvas, width, height, dpr) {
         emphasis: {
           focus: 'series'
         },
-        data: [320, 302, 301, 334, 390, 330, 320]
+        data: [dailyCount, dailyCount, dailyCount, dailyCount, dailyCount, dailyCount, dailyCount]
       },
       {
         name: '复习单词',
@@ -51,7 +54,7 @@ function initChart1(canvas, width, height, dpr) {
         emphasis: {
           focus: 'series'
         },
-        data: [820, 832, 901, 934, 1290, 1330, 1320]
+        data: predict
       }
     ]
   };
@@ -66,44 +69,6 @@ function initChart(canvas, width, height, dpr) {
     devicePixelRatio: dpr
   });
   canvas.setChart(chart);
-  // const option = {
-  //   tooltip: {
-  //     position: 'top',
-  //     formatter: function (p) {
-  //       const format = echarts.time.format(p.data[0], '{yyyy}-{MM}-{dd}', false);
-  //       return format + ': ' + p.data[1];
-  //     }
-  //   },
-  //   visualMap: {
-  //     min: 0,
-  //     max: 1000,
-  //     calculable: true,
-  //     orient: 'horizontal',
-  //     top: '70px'
-  //   },
-  //   calendar: [
-  //     {
-  //       left: 50,
-  //       top:100,
-  //       cellSize: [30, 20],
-  //       bottom: 0,
-  //       orient: 'vertical',
-  //       range: '2023',
-  //       dayLabel: {
-  //         margin: 5
-  //       },
-  //       yearLabel: { show: false }
-  //     }
-  //   ],
-  //   series: [
-  //     {
-  //       type: 'heatmap',
-  //       coordinateSystem: 'calendar',
-  //       calendarIndex: 0,
-  //       data: getVirtualData('2023'),
-  //     }
-  //   ]
-  // };
   const range = getCurrentPages()[getCurrentPages().length - 1].data.yearMonth
   const data = getCurrentPages()[getCurrentPages().length - 1].data.data
   const option = {
@@ -182,16 +147,29 @@ Page({
     },
     yearMonth: '',
     data: [],
-    currentTab: 0
+    currentTab: 0,
+    predict: [],
+    dateArray: []
   },
   onLoad() {
     let date = new Date()
     let that = this
     date = date.getFullYear() + '-' + (date.getMonth() + 1)
+    let today = new Date() //获取今天的日期
+    let dateArray = []
+    for (let i = 0; i < 7; i++) {
+      let today = new Date(); //每次循环将时间初始为当前时间
+      let str = today.getDate() + i; //假设当前日期为4.28号
+      today.setDate(str);
+      console.log('日期', today);
+      dateArray.push(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
+    }
+    console.log(dateArray)
     this.setData({
       name: app.globalData.userInfo.name,
       avatarUrl: app.globalData.userInfo.avatarUrl,
-      yearMonth: date
+      yearMonth: date,
+      dateArray: dateArray
     })
     if (wx.getUserProfile) {
       this.setData({
@@ -209,6 +187,15 @@ Page({
           data: arr
         })
         console.log(this.data.data)
+      }
+    })
+    wx.request({
+      url: 'http://localhost:2346/word/predict?openid=' + app.globalData.userInfo.id,
+      success: (res) => {
+        console.log(res)
+        that.setData({
+          predict: res.data
+        })
       }
     })
   },
