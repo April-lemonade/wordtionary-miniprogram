@@ -34,7 +34,7 @@ Page({
     finishDate: '',
     progress: 0,
     num: 0,
-    leftCount:0
+    leftCount: 0
   },
 
   /**
@@ -70,8 +70,8 @@ Page({
           that.setData({
             progress: res.data.progress,
             finishDate: res.data.finishDate,
-            progress: parseFloat(res.data.progress),
-            leftCount:res.data.leftCount
+            progress: parseFloat(res.data.progress * 100).toFixed(4),
+            leftCount: res.data.leftCount
           })
         }
       })
@@ -209,7 +209,7 @@ Page({
    */
   onShow() {
     // this.onLoad()
-    
+
     this.setData({
       selectedBookId: app.globalData.bookId,
       dailyCount: app.globalData.userInfo.dailyCount
@@ -335,7 +335,7 @@ Page({
   },
 
   onShow: function () {
-    // this.onLoad()
+    this.onLoad()
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
@@ -411,7 +411,7 @@ Page({
             that.setData({
               progress: res.data.progress,
               finishDate: res.data.finishDate,
-              progress: parseFloat(res.data.progress)
+              progress: parseFloat(res.data.progress * 100).toFixed(4)
             })
           }
         })

@@ -17,7 +17,7 @@
         <t-icon style="margin-left: 5%;" color="#0052d9" size="20px" bindtap="countEdit" name="close-circle-filled" />
       </view>
     </view>
-    <t-progress theme="plump" percentage="{{progress*100}}" />
+    <t-progress theme="plump" percentage="{{progress}}" />
     <view class="predict">
       <view>剩余单词数量：{{leftCount}}</view>
       <view>预计完成时间：{{finishDate}}</view>

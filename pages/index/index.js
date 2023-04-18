@@ -108,7 +108,6 @@ Page({
         if (res.data.length != 0) {
           app.globalData.wordList = res.data
           app.globalData.allCount = res.data.length
-          // console.log(app.globalData.allCount)
           var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
           var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
           if (app.globalData.dictionaryId == 0) {

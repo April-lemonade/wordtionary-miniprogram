@@ -92,6 +92,7 @@ Page({
       },
       success: (res) => {
         console.log(res)
+        app.onLaunch()
         wx.switchTab({
           url: '/pages/books/index',
         })
