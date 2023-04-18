@@ -37,7 +37,9 @@ Page({
     count: 0,
     finish: 0,
     dictionaryId: 1,
-    searchValue: ''
+    searchValue: '',
+    allCount: 0,
+    showCount: 1
   },
   onLoad() {
     let that = this
@@ -70,9 +72,10 @@ Page({
         if (res.data.length != 0) {
           app.globalData.wordList = res.data
           app.globalData.allCount = res.data.length
+          console.log(app.globalData.allCount)
           var array = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
           var array1 = new Array(JSON.parse(res.data[0].oxfordTranslations).senses.length);
-          if (app.globalData.userInfo.dictionaryId == 0) {
+          if (app.globalData.dictionaryId == 0) {
             for (let i = 0; i < array.length; i++) {
               array1[i] = ''
               array[i] = -2
@@ -82,7 +85,7 @@ Page({
               class: array1
             })
           }
-          if (app.globalData.userInfo.dictionaryId == 1) {
+          if (app.globalData.dictionaryId == 1) {
             var camarray = new Array(JSON.parse(res.data[0].cambridgeTranslations).length);
             var camarray1 = new Array(JSON.parse(res.data[0].cambridgeTranslations).length);
             for (let i = 0; i < camarray.length; i++) {
@@ -96,13 +99,14 @@ Page({
           }
           that.setData({
             wordList: res.data,
+            allCount: res.data.length,
             word: res.data[that.data.count],
             translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
             translation1: JSON.parse(res.data[that.data.count].cambridgeTranslations),
             loading: 0,
             finish: 0,
-            bookId: app.globalData.userInfo.bookId,
-            dictionaryId: app.globalData.userInfo.dictionaryId
+            bookId: app.globalData.bookId,
+            dictionaryId: app.globalData.dictionaryId
           })
           console.log(this.data.translation1)
         } else {
@@ -281,9 +285,6 @@ Page({
     let that = this
     let arr = this.data.familiar
     arr.sort()
-    if (arr[0] == -1) {
-      app.globalData.allCount = app.globalData.allCount - 1
-    }
     wx.request({
       url: 'http://localhost:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0] + '&listId=' + app.globalData.userInfo.bookId,
       success: (res) => {
@@ -292,6 +293,11 @@ Page({
           count: that.data.count + 1,
           disabled: true
         })
+        if (arr[0] != -1) {
+          that.setData({
+            showCount: that.data.showCount + 1
+          })
+        }
         if (that.data.count == app.globalData.wordList.length) {
           wx.request({
             url: 'http://localhost:2346/word/getrelearn?openid=' + app.globalData.userInfo.id,

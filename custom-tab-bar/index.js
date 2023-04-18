@@ -34,6 +34,9 @@
 const app = getApp()
 
 Component({
+  properties:{
+    
+  },
   data: {
     value: 'label_1',
     list: [{
@@ -58,15 +61,18 @@ Component({
   },
   lifetimes: {
     created: function () {
+      console.log("!!!"+app.globalData.allCount)
+
       this.setData({
-        allCount: 6
+        allCount: app.globalData.allCount
       })
     },
 
     attached: function () {
+      console.log("!!!"+app.globalData.allCount)
       // 在组件实例进入页面节点树时执行
       this.setData({
-        allCount: 6
+        allCount: app.globalData.allCount
       })
     },
     detached: function () {

@@ -44,8 +44,9 @@
       <view>请先选择一本词书</view>
     </block>
     <view wx:if="{{loading==0&&bookId!=0&&finish==0}}" class="card">
-      <view class="word">
-        <p>{{word.word}}</p>
+      <view style="display: flex;margin: 5%;flex-direction: column;">
+        <view>{{showCount}}/{{allCount}}</view>
+        <p class="word">{{word.word}}</p>
       </view>
       <view class="soundmark">
         <view class="bri_soundmark">
