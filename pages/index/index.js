@@ -320,7 +320,7 @@ Page({
     let arr = this.data.familiar
     arr.sort()
     wx.request({
-      url: 'http://localhost:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0] + '&listId=' + app.globalData.userInfo.bookId,
+      url: 'http://localhost:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0] + '&listId=' + that.data.word.listid,
       success: (res) => {
         console.log(res)
         that.setData({

@@ -61,15 +61,12 @@ Component({
   },
   lifetimes: {
     created: function () {
-      console.log("!!!"+app.globalData.allCount)
-
       this.setData({
         allCount: app.globalData.allCount
       })
     },
 
     attached: function () {
-      console.log("!!!"+app.globalData.allCount)
       // 在组件实例进入页面节点树时执行
       this.setData({
         allCount: app.globalData.allCount

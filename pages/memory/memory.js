@@ -98,6 +98,7 @@ Page({
           showDialog: false,
           num: 0
         })
+        app.onLaunch()
       }
     })
     console.log(this.data.memoryTrace)
@@ -109,6 +110,7 @@ Page({
     this.setData({
       memoryTrace: app.globalData.userInfo.familiar.split(",")
     })
+
   },
 
   /**
