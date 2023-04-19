@@ -43,7 +43,7 @@
       <image src="/assets/unlogin.png" style="width: 75%;margin-top: 10%;" />
       <view>请先选择一本词书</view>
     </block>
-    <view wx:if="{{loading==0&&bookId!=0&&finish==0}}" class="card">
+    <view wx:if="{{loading==0&&bookId!=0&&finish==0&&word.id!=-1}}" class="card">
       <view>{{showCount}}/{{allCount}}</view>
       <view style="display: flex;margin: 5%;flex-direction: column;align-items: center;">
         <p class="word">{{word.word}}</p>
@@ -107,7 +107,7 @@
       </view>
       <view style="display: flex;flex-direction: row;width: 90%;">
         <!-- <t-button style="margin-right: 5%;" theme="danger" size="small">KILL</t-button> -->
-        <t-button theme="primary" size="small" disabled="{{disabled}}" bindtap="next">下一个</t-button>
+        <t-button theme="primary" size="small" disabled="{{disabled}}" bindtap="next" style="margin-top: 5%;">下一个</t-button>
       </view>
     </view>
     <view wx:if="{{finish==1}}" style="text-align: center;">
@@ -115,7 +115,7 @@
       <view>完成今天的学习任务啦，真了不起！</view>
       <!-- <t-button style="margin-top: 5%;" theme="primary" size="large" bindtap="moreWord">再来一组</t-button> -->
     </view>
-    <view wx:if="{{allFinish==1}}">
+    <view wx:if="{{word.id==-1}}">
       <image src="/assets/unlogin.png" style="width: 100%;margin-top: 10%;" />
       <view>已经背完这本词书啦，真棒！</view>
     </view>

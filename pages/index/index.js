@@ -132,9 +132,18 @@ Page({
               class: camarray1
             })
           }
+          if (res.data[res.data.length - 1].id == -1) {
+            that.setData({
+              allCount: res.data.length - 1
+            })
+          } else {
+            that.setData({
+              allCount: res.data.length
+            })
+          }
           that.setData({
             wordList: res.data,
-            allCount: res.data.length,
+            // allCount: res.data.length,
             word: res.data[that.data.count],
             translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
             translation1: JSON.parse(res.data[that.data.count].cambridgeTranslations),
@@ -179,8 +188,18 @@ Page({
                     wordList: res.data,
                   })
                 }
+                if (res.data[res.data.length - 1].id == -1) {
+                  that.setData({
+                    allCount: res.data.length - 1
+                  })
+                } else {
+                  that.setData({
+                    allCount: res.data.length
+                  })
+                }
                 that.setData({
                   wordList: res.data,
+                  // allCount: res.data.length,
                   word: res.data[that.data.count],
                   translation: JSON.parse(res.data[that.data.count].oxfordTranslations),
                   translation1: JSON.parse(res.data[that.data.count].cambridgeTranslations),
