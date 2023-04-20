@@ -27,8 +27,9 @@ Page({
         that.setData({
           showConfirm: false
         })
-        wx.navigateTo({
-          url: '/pages/setting/setting',
+        
+        wx.navigateBack({
+          delta: 1
         })
       }
     })
