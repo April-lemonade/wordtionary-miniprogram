@@ -27,8 +27,8 @@ Page({
         that.setData({
           showConfirm: false
         })
-        wx.switchTab({
-          url: '/pages/index/index',
+        wx.navigateTo({
+          url: '/pages/setting/setting',
         })
       }
     })

@@ -440,23 +440,29 @@ Page({
       url: 'http://localhost:2346/note/getnote?openid=' + app.globalData.userInfo.id + '&wordId=' + id,
       success: (res) => {
         console.log(res)
-        that.setData({
-          note: res.data[0].content,
-          newNote: res.data[0].content
-        })
+        if (res.data[0]) {
+          that.setData({
+            note: res.data[0].content,
+            newNote: res.data[0].content
+          })
+        }
       }
     })
   },
 
   moreWord() {
     let that = this
+    this.setData({
+      loading: 1
+    })
     wx.request({
       url: 'http://localhost:2346/word/getoneword?bookId=' + app.globalData.userInfo.bookId + '&wordId=' + app.globalData.userInfo.wordId + '&dailyCount=' + app.globalData.userInfo.dailyCount + '&dictionaryId=' + app.globalData.userInfo.dictionaryId,
       success: (res) => {
         console.log(res)
         that.setData({
           bookId: app.globalData.userInfo.bookId,
-          dictionaryId: app.globalData.userInfo.dictionaryId
+          dictionaryId: app.globalData.userInfo.dictionaryId,
+          loading: 0
         })
         if (res.data.length != 0) {
           app.globalData.wordList = res.data
