@@ -157,7 +157,7 @@ Page({
     date = date.getFullYear() + '-' + (date.getMonth() + 1)
     let today = new Date() //获取今天的日期
     let dateArray = []
-    for (let i = 0; i < 7; i++) {
+    for (let i = 1; i <= 7; i++) {
       let today = new Date(); //每次循环将时间初始为当前时间
       let str = today.getDate() + i; //假设当前日期为4.28号
       today.setDate(str);
