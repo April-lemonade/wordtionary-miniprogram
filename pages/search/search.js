@@ -4,8 +4,19 @@ import ActionSheet, {
   ActionSheetTheme
 } from 'tdesign-miniprogram/action-sheet/index';
 
-Page({
+import Toast from 'tdesign-miniprogram/toast/index';
 
+
+Page({
+  showText() {
+    Toast({
+      context: this,
+      selector: '#t-toast',
+      message: '添加成功',
+      theme: 'success',
+      direction: 'column',
+    });
+  },
   /**
    * 页面的初始数据
    */
@@ -26,7 +37,7 @@ Page({
       dictionaryId: app.globalData.userInfo.dictionaryId
     })
     wx.request({
-      url: 'http://localhost:2346/word/searchword?word=' + options.searchValue + '&dictionaryId=' + this.data.dictionaryId,
+      url: 'http://121.40.140.72:2346/word/searchword?word=' + options.searchValue + '&dictionaryId=' + this.data.dictionaryId,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -35,7 +46,7 @@ Page({
           loading: 0
         })
         wx.request({
-          url: 'http://localhost:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
+          url: 'http://121.40.140.72:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
           success: (res) => {
             console.log(res)
             that.setData({
@@ -115,8 +126,9 @@ Page({
   },
   handleSelected(e) {
     console.log(e.detail);
+    this.showText()
     wx.request({
-      url: 'http://localhost:2346/word/addword?word=' + this.data.searchValue + '&listid=' + e.detail.selected.index,
+      url: 'http://121.40.140.72:2346/word/addword?word=' + this.data.searchValue + '&listid=' + e.detail.selected.index,
       success: (res) => {
         console.log(res)
       }

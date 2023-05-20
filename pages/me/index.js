@@ -158,7 +158,7 @@ Page({
     let today = new Date() //获取今天的日期
     let dateArray = []
     for (let i = 1; i <= 7; i++) {
-      let today = new Date(); //每次循环将时间初始为当前时间
+      let today = new Date();
       let str = today.getDate() + i; //假设当前日期为4.28号
       today.setDate(str);
       console.log('日期', today);
@@ -177,11 +177,17 @@ Page({
       })
     }
     wx.request({
-      url: 'http://localhost:2346/record/getstatisics?openid=' + app.globalData.userInfo.id,
+      url: 'http://121.40.140.72:2346/record/getstatisics?openid=' + app.globalData.userInfo.id,
       success: (res) => {
         let arr = []
+        var dateTime = new Date(res.data[0].date);
         for (let i = 0; i < res.data.length; i++) {
-          arr.push([res.data[i].date, res.data[i].count])
+          let str = dateTime.getFullYear() + '-' + (dateTime.getMonth() + 1) + '-' + dateTime.getDate()
+          if (str !== res.data[i].date) {
+            arr.push([res.data[i].date, 0])
+          } else {
+            arr.push([res.data[i].date, res.data[i].count])
+          }
         }
         that.setData({
           data: arr
@@ -190,7 +196,7 @@ Page({
       }
     })
     wx.request({
-      url: 'http://localhost:2346/word/predict?openid=' + app.globalData.userInfo.id,
+      url: 'http://121.40.140.72:2346/word/predict?openid=' + app.globalData.userInfo.id,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -224,7 +230,7 @@ Page({
         })
         app.globalData.userInfo = res
         wx.request({
-          url: 'http://localhost:2346/user/saveinfo',
+          url: 'http://121.40.140.72:2346/user/saveinfo',
           header: {
             "Content-Type": "application/x-www-form-urlencoded"
           },

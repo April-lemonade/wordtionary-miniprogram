@@ -21,7 +21,7 @@ Page({
   changeDictionary() {
     let that = this
     wx.request({
-      url: 'http://localhost:2346/user/changedic?openid=' + app.globalData.userInfo.id + '&dictionaryId=' + this.data.value,
+      url: 'http://121.40.140.72:2346/user/changedic?openid=' + app.globalData.userInfo.id + '&dictionaryId=' + this.data.value,
       success: (res) => {
         app.onLaunch()
         that.setData({

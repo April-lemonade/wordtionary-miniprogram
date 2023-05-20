@@ -34,5 +34,5 @@
     </view>
   </view>
   <t-action-sheet id="t-action-sheet" bind:selected="handleSelected" />
-
+  <t-toast id="t-toast" />
 </view>

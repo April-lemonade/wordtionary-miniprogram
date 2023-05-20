@@ -54,7 +54,7 @@ Page({
         num: app.globalData.userInfo.dailyCount,
       })
       wx.request({
-        url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
+        url: 'http://121.40.140.72:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
         success: (res) => {
           console.log("重新获取名称")
           console.log(res)
@@ -64,7 +64,7 @@ Page({
         }
       })
       wx.request({
-        url: 'http://localhost:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
+        url: 'http://121.40.140.72:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
         success: (res) => {
           console.log(res)
           that.setData({
@@ -87,7 +87,7 @@ Page({
       }
     }
     wx.request({
-      url: 'http://localhost:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
+      url: 'http://121.40.140.72:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -97,7 +97,7 @@ Page({
       }
     })
     wx.request({
-      url: 'http://localhost:2346/wordlist/getadmin',
+      url: 'http://121.40.140.72:2346/wordlist/getadmin',
       success: (res) => {
         console.log(res)
         that.setData({
@@ -116,7 +116,7 @@ Page({
     //   dailyCount: that.data.num
     // })
     wx.request({
-      url: 'http://localhost:2346/user/changedailycount?openid=' + app.globalData.userInfo.id + '&dailyCount=' + this.data.num,
+      url: 'http://121.40.140.72:2346/user/changedailycount?openid=' + app.globalData.userInfo.id + '&dailyCount=' + this.data.num,
       success: (res) => {
         app.globalData.userInfo.dailyCount = that.data.num
         console.log(res)
@@ -152,7 +152,7 @@ Page({
         num: app.globalData.userInfo.dailyCount,
       })
       wx.request({
-        url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
+        url: 'http://121.40.140.72:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
         success: (res) => {
           console.log(res)
           that.setData({
@@ -161,7 +161,7 @@ Page({
         }
       })
       wx.request({
-        url: 'http://localhost:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
+        url: 'http://121.40.140.72:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
         success: (res) => {
           console.log(res)
           that.setData({
@@ -183,7 +183,7 @@ Page({
       }
     }
     wx.request({
-      url: 'http://localhost:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
+      url: 'http://121.40.140.72:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -193,7 +193,7 @@ Page({
       }
     })
     wx.request({
-      url: 'http://localhost:2346/wordlist/getadmin',
+      url: 'http://121.40.140.72:2346/wordlist/getadmin',
       success: (res) => {
         console.log(res)
         that.setData({
@@ -232,7 +232,7 @@ Page({
           num: app.globalData.userInfo.dailyCount,
         })
         wx.request({
-          url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
+          url: 'http://121.40.140.72:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
           success: (res) => {
             console.log("重新获取名称")
             that.setData({
@@ -241,7 +241,7 @@ Page({
           }
         })
         wx.request({
-          url: 'http://localhost:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
+          url: 'http://121.40.140.72:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
           success: (res) => {
             console.log(res)
             that.setData({
@@ -263,7 +263,7 @@ Page({
         }
       }
       wx.request({
-        url: 'http://localhost:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
+        url: 'http://121.40.140.72:2346/wordlist/getuser?openid=' + app.globalData.userInfo.id,
         success: (res) => {
           console.log(res)
           that.setData({
@@ -273,7 +273,7 @@ Page({
         }
       })
       wx.request({
-        url: 'http://localhost:2346/wordlist/getadmin',
+        url: 'http://121.40.140.72:2346/wordlist/getadmin',
         success: (res) => {
           console.log(res)
           that.setData({
@@ -390,13 +390,13 @@ Page({
       value: -1
     })
     wx.request({
-      url: 'http://localhost:2346/wordlist/change?bookId=' + finalvalue + '&openid=' + app.globalData.openid,
+      url: 'http://121.40.140.72:2346/wordlist/change?bookId=' + finalvalue + '&openid=' + app.globalData.openid,
       success: (res) => {
         console.log(res)
         app.globalData.userInfo.bookId = finalvalue
         that.onLoad()
         wx.request({
-          url: 'http://localhost:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
+          url: 'http://121.40.140.72:2346/wordlist/getname?bookId=' + app.globalData.userInfo.bookId,
           success: (res) => {
             console.log(res)
             that.setData({
@@ -405,7 +405,7 @@ Page({
           }
         })
         wx.request({
-          url: 'http://localhost:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
+          url: 'http://121.40.140.72:2346/wordlist/getprogress?bookid=' + app.globalData.userInfo.bookId + '&openid=' + app.globalData.userInfo.id,
           success: (res) => {
             console.log(res)
             that.setData({
@@ -455,7 +455,7 @@ Page({
       value: -1
     })
     wx.request({
-      url: 'http://localhost:2346/wordlist/deletelist?bookid=' + finalvalue,
+      url: 'http://121.40.140.72:2346/wordlist/deletelist?bookid=' + finalvalue,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -486,7 +486,7 @@ Page({
       value: -1
     })
     wx.request({
-      url: 'http://localhost:2346/wordlist/changelistname?bookid=' + finalvalue + '&name=' + this.data.changeName,
+      url: 'http://121.40.140.72:2346/wordlist/changelistname?bookid=' + finalvalue + '&name=' + this.data.changeName,
       success: (res) => {
         that.setData({
           showWithInput: false

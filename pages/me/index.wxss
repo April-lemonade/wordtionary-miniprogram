@@ -21,7 +21,7 @@
   background-blend-mode: darken;
   background-position: right;
   background-repeat: no-repeat;
-  background-size: auto 270px;
+  background-size: auto 280px;
 }
 
 .info {

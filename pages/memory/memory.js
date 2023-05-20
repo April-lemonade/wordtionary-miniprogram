@@ -31,7 +31,7 @@ Page({
     arr.push(this.data.num)
     // console.log(arr)
     wx.request({
-      url: 'http://localhost:2346/user/changefamiliar?openid=' + app.globalData.userInfo.id + '&familiar=' + arr.toString(),
+      url: 'http://121.40.140.72:2346/user/changefamiliar?openid=' + app.globalData.userInfo.id + '&familiar=' + arr.toString(),
       success: (res) => {
         console.log(res)
         that.setData({
@@ -49,7 +49,7 @@ Page({
     let arr = this.data.memoryTrace
     arr.splice(this.data.current - 1, 1)
     wx.request({
-      url: 'http://localhost:2346/user/changefamiliar?openid=' + app.globalData.userInfo.id + '&familiar=' + arr.toString(),
+      url: 'http://121.40.140.72:2346/user/changefamiliar?openid=' + app.globalData.userInfo.id + '&familiar=' + arr.toString(),
       success: (res) => {
         console.log(res)
         that.setData({
@@ -91,7 +91,7 @@ Page({
       memoryTrace: arr,
     })
     wx.request({
-      url: 'http://localhost:2346/user/changefamiliar?openid=' + app.globalData.userInfo.id + '&familiar=' + this.data.memoryTrace.toString(),
+      url: 'http://121.40.140.72:2346/user/changefamiliar?openid=' + app.globalData.userInfo.id + '&familiar=' + this.data.memoryTrace.toString(),
       success: (res) => {
         console.log(res)
         that.setData({

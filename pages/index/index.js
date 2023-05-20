@@ -48,7 +48,7 @@ Page({
     console.log(this.data.newNote)
     let that = this
     wx.request({
-      url: 'http://localhost:2346/note/addnote',
+      url: 'http://121.40.140.72:2346/note/addnote',
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
@@ -98,7 +98,7 @@ Page({
   getInfo() {
     let that = this
     wx.request({
-      url: 'http://localhost:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId + '&dictionaryId=' + app.globalData.userInfo.dictionaryId + '&openid=' + app.globalData.userInfo.id,
+      url: 'http://121.40.140.72:2346/word/getwords?bookId=' + app.globalData.userInfo.bookId + "&wordId=" + app.globalData.userInfo.wordId + '&dictionaryId=' + app.globalData.userInfo.dictionaryId + '&openid=' + app.globalData.userInfo.id,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -157,7 +157,7 @@ Page({
         } else {
           console.log("直接开始重学")
           wx.request({
-            url: 'http://localhost:2346/word/getrelearn?openid=' + app.globalData.userInfo.id,
+            url: 'http://121.40.140.72:2346/word/getrelearn?openid=' + app.globalData.userInfo.id,
             success: (res) => {
               app.globalData.wordList = res.data
               console.log(res)
@@ -248,7 +248,7 @@ Page({
         //     if (res.code) {
         //       //发起网络请求
         //       wx.request({
-        //         url: 'http://localhost:2346/user/login',
+        //         url: 'http://121.40.140.72:2346/user/login',
         //         header: {
         //           "Content-Type": "application/x-www-form-urlencoded"
         //         },
@@ -339,7 +339,7 @@ Page({
     let arr = this.data.familiar
     arr.sort()
     wx.request({
-      url: 'http://localhost:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0] + '&listId=' + that.data.word.listid,
+      url: 'http://121.40.140.72:2346/record/addrecord?openid=' + app.globalData.userInfo.id + '&wordId=' + that.data.word.id + '&familiar=' + arr[0] + '&listId=' + that.data.word.listid,
       success: (res) => {
         console.log(res)
         that.setData({
@@ -353,7 +353,7 @@ Page({
         }
         if (that.data.count == app.globalData.wordList.length) {
           wx.request({
-            url: 'http://localhost:2346/word/getrelearn?openid=' + app.globalData.userInfo.id,
+            url: 'http://121.40.140.72:2346/word/getrelearn?openid=' + app.globalData.userInfo.id,
             success: (res) => {
               app.globalData.wordList = res.data
               if (res.data.length != 0) {
@@ -437,7 +437,7 @@ Page({
   getNote(id) {
     let that = this
     wx.request({
-      url: 'http://localhost:2346/note/getnote?openid=' + app.globalData.userInfo.id + '&wordId=' + id,
+      url: 'http://121.40.140.72:2346/note/getnote?openid=' + app.globalData.userInfo.id + '&wordId=' + id,
       success: (res) => {
         console.log(res)
         if (res.data[0]) {
@@ -456,7 +456,7 @@ Page({
       loading: 1
     })
     wx.request({
-      url: 'http://localhost:2346/word/getoneword?bookId=' + app.globalData.userInfo.bookId + '&wordId=' + app.globalData.userInfo.wordId + '&dailyCount=' + app.globalData.userInfo.dailyCount + '&dictionaryId=' + app.globalData.userInfo.dictionaryId,
+      url: 'http://121.40.140.72:2346/word/getoneword?bookId=' + app.globalData.userInfo.bookId + '&wordId=' + app.globalData.userInfo.wordId + '&dailyCount=' + app.globalData.userInfo.dailyCount + '&dictionaryId=' + app.globalData.userInfo.dictionaryId,
       success: (res) => {
         console.log(res)
         that.setData({

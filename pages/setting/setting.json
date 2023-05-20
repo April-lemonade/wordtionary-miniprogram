@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell"
+    "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell",
+    "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button"
   },
   "navigationBarTitleText": "设置"
 }

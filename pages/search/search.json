@@ -3,7 +3,8 @@
     "t-loading": "/miniprogram_npm/tdesign-miniprogram/loading/loading",
     "t-dialog": "/miniprogram_npm/tdesign-miniprogram/dialog/dialog",
     "t-input": "/miniprogram_npm/tdesign-miniprogram/input/input",
-    "t-action-sheet": "/miniprogram_npm/tdesign-miniprogram/action-sheet/action-sheet"
+    "t-action-sheet": "/miniprogram_npm/tdesign-miniprogram/action-sheet/action-sheet",
+    "t-toast": "/miniprogram_npm/tdesign-miniprogram/toast/toast"
   },
   "navigationBarTitleText": ""
 }

@@ -22,8 +22,11 @@
         </view>
       </view>
     </view>
+    <text style="color: white;font-size: 40px;margin-top:70px;" class="iconfont icon-rongyu"></text>
     <view style="margin-top:70px;margin-right: 5%;">
+      <!-- <contact-button style="color: white;"></contact-button> -->
       <t-icon name="setting" size="80rpx" color="white" bind:click="onIconTap" />
+      
     </view>
 
   </view>

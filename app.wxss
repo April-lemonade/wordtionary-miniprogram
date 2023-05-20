@@ -2,3 +2,12 @@
 @import "iconfont.wxss";
 @import "animate.wxss";
 
+::-webkit-scrollbar {
+
+
+  display:none;
+  width:0;
+  height:0;
+  color:transparent;
+}
+

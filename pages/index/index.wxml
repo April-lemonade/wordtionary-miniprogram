@@ -31,7 +31,7 @@
   <view class="example-search">
     <t-search model:value="{{searchValue}}" placeholder="" bind:submit="goSearch" />
   </view>
-  <view class="userinfo">
+  <scroll-view 	scroll-y class="userinfo">
     <block wx:if="{{loading==1}}">
       <t-dialog visible="{{true}}" title="单词正在运输途中，请稍后" content="">
         <t-image slot="middle" t-class="image-host dialog-image" src="/assets/loading.png" />
@@ -119,5 +119,5 @@
       <image src="/assets/unlogin.png" style="width: 100%;margin-top: 10%;" />
       <view>已经背完这本词书啦，真棒！</view>
     </view>
-  </view>
+  </scroll-view>
 </view>

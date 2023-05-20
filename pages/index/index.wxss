@@ -2,7 +2,6 @@
 .container {
   width: 90%;
   height: 100%;
-  margin: 5%;
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -18,10 +17,12 @@
 }
 
 .userinfo {
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #aaa;
+  height: 1200rpx;
 }
 
 .userinfo-avatar {
@@ -78,8 +79,8 @@
 }
 
 .overview{
-  width: 90%;
-  margin: 0% 5%;
+  /* width: 90%; */
+  /* margin: 0% 5%; */
 }
 
 .btn-wrapper {

@@ -86,7 +86,7 @@ Page({
   submit() {
     let that = this
     wx.request({
-      url: 'http://localhost:2346/user/setaccount',
+      url: 'http://121.40.140.72:2346/user/setaccount',
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },

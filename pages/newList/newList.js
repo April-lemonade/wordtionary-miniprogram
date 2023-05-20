@@ -80,7 +80,7 @@ Page({
       disable: true
     })
     wx.request({
-      url: 'http://localhost:2346/wordlist/addlist',
+      url: 'http://121.40.140.72:2346/wordlist/addlist',
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },

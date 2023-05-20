@@ -13,7 +13,7 @@ App({
         if (res.code) {
           //发起网络请求
           wx.request({
-            url: 'http://localhost:2346/user/login',
+            url: 'http://121.40.140.72:2346/user/login',
             header: {
               "Content-Type": "application/x-www-form-urlencoded"
             },

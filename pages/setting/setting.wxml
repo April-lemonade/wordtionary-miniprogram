@@ -3,4 +3,7 @@
   <t-cell title="账号设置" bindtap="goAccount" hover arrow />
   <t-cell title="词源设置" bindtap="goDictionary" hover arrow />
   <t-cell title="记忆设置" bindtap="goMemory" hover arrow />
+  <view style="width: 100%;text-align: center;margin-top: 5%;">
+    <t-button theme="primary" icon="service" content="意见与反馈" size="large" class="margin" open-type="contact"></t-button>
+  </view>
 </view>
